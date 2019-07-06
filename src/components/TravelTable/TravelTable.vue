@@ -2,30 +2,23 @@
   <table>
     <thead>
       <tr>
-        <th>Header content 1</th>
-        <th>Header content 2</th>
+        <th>Dia</th>
+        <th>Serviço</th>
+        <th>Hora de Saida</th>
+        <th>Hora de Chegada</th>
+        <th>Valor</th>
       </tr>
     </thead>
-    <tfoot>
-      <tr>
-        <td>Footer content 1</td>
-        <td>Footer content 2</td>
-      </tr>
-    </tfoot>
     <tbody>
-      <tr>
-        <td>Body content 1</td>
-        <td>Body content 2</td>
-      </tr>
+      <travel-row></travel-row>
     </tbody>
   </table>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import TravelRow from "./TravelRow.vue";
 
-@Component
-export default class TravelTable extends Vue {
-  @Prop() private msg!: string;
-}
+@Component({ components: { TravelRow } })
+export default class TravelTable extends Vue {}
 </script>
