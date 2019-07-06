@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="month" />
+    <month-selector></month-selector>
     <table>
       <thead>
         <tr>
@@ -21,7 +21,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import TravelRow from "./TravelRow.vue";
+import MonthSelector from "./MonthSelector.vue";
 
-@Component({ components: { TravelRow } })
+@Component({ components: { TravelRow, MonthSelector } })
 export default class TravelTable extends Vue {}
 </script>
