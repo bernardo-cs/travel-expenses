@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>1</td>
+    <td>{{ index }}</td>
     <td>Deslocações</td>
     <td>13</td>
     <td>18</td>
@@ -9,8 +9,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
-export default class TravelRow extends Vue {}
+export default class TravelRow extends Vue {
+  @Prop() public index!: number;
+}
 </script>
