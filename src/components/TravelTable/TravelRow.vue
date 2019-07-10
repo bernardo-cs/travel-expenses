@@ -1,18 +1,22 @@
 <template>
   <tr>
-    <td>{{ index }}</td>
-    <td>Deslocações</td>
-    <td>13</td>
-    <td>18</td>
+    <td>{{ day.getUTCDate() }}</td>
+    <td>{{ description }}</td>
+    <td>{{ departure.getHours() }}</td>
+    <td>{{ arrival.getHours() }}</td>
     <td>34,60</td>
   </tr>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { Moment } from "moment";
 
 @Component
 export default class TravelRow extends Vue {
-  @Prop() public index!: number;
+  @Prop() public day!: Date;
+  @Prop() public departure!: Date;
+  @Prop() public description!: Date;
+  @Prop() public arrival!: Date;
 }
 </script>

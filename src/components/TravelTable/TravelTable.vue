@@ -13,7 +13,14 @@
         </tr>
       </thead>
       <tbody>
-        <travel-row v-for="row in rows" v-bind:index="row.number" v-bind:key="row.number"></travel-row>
+        <travel-row
+          v-for="row in rows"
+          :day="row.day"
+          :description="row.service"
+          :key="row.number"
+          :departure="row.departure"
+          :arrival="row.arrival"
+        ></travel-row>
       </tbody>
     </table>
   </div>

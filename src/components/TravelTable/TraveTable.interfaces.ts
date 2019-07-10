@@ -1,6 +1,8 @@
+import { Moment } from "moment";
+
 export interface IRow {
-  number: Number;
+  day: Date;
   service: String;
-  departureTime: String;
-  arrivalTime: String;
+  departure: Date;
+  arrival: Date;
 }
