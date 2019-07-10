@@ -1,13 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import moment from "moment";
-import { IRow } from "./components/TravelTable/TraveTable.interfaces";
+import {
+  IRow,
+  TypeOfWorker
+} from "./components/TravelTable/TraveTable.interfaces";
 
 Vue.use(Vuex);
 
 interface StoreState {
   date: Date;
   rows: Array<IRow>;
+  workerType: TypeOfWorker;
 }
 
 interface StoreGetters {
@@ -36,7 +40,8 @@ const store: {
       moment()
         .set("date", 1)
         .toDate()
-    )
+    ),
+    workerType: "directors"
   },
   getters: {
     dateSimple: state => {

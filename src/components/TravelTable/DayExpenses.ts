@@ -1,13 +1,14 @@
 import Moment from "moment";
 import moment from "moment";
 import { extendMoment } from "moment-range";
+import {
+  MaxDailyExpense,
+  CountryTravel,
+  TypeOfWorker
+} from "./TraveTable.interfaces";
 
 const rangedMoment = extendMoment(Moment as any);
-
-type CountryTravel = "inside" | "outside";
-type WorkerType = "directors" | "others";
-
-const maxDailyExpense = {
+const maxDailyExpense: MaxDailyExpense = {
   inside: { directors: 69.19, others: 50.2 },
   outside: { directors: 100.24, others: 89.35 }
 };
@@ -58,7 +59,7 @@ export function dailyExpenses(
   departure: Date,
   accomodation: boolean,
   countryTravelType: CountryTravel,
-  workerType: WorkerType
+  workerType: TypeOfWorker
 ): number {
   const percentage = expenseRules
     .map(rule => rule.apply(arrival, departure, accomodation))
