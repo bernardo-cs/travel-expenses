@@ -19,7 +19,7 @@ interface StoreMutations {
   setDate: (state: StoreState, date: string | Date) => void;
   changeRow: (
     state: StoreState,
-    payload: { index: number; property: string; value: number }
+    payload: { index: number; property: keyof IRow; value: any }
   ) => void;
 }
 
@@ -55,7 +55,10 @@ const store: {
         .set("d", 1)
         .toDate();
     },
-    changeRow(state, payload) {}
+    changeRow(state, { index, property, value }) {
+      const row = state.rows[index];
+      row[property] = value;
+    }
   }
 };
 
@@ -74,7 +77,7 @@ function initRows(date: Date): Array<IRow> {
         .toDate(),
       arrival: moment(date)
         .set("date", 1 + index)
-        .set("hour", 13)
+        .set("hour", 22)
         .toDate()
     };
   });

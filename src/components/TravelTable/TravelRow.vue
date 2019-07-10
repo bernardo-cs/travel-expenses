@@ -7,7 +7,7 @@
         type="time"
         :max="hours(arrival)"
         :value="hours(departure)"
-        @input="$emit('departureChanged', $event.target.value)"
+        @input="dateChanged('departureChanged', $event.target.value)"
       />
     </td>
     <td>
@@ -15,16 +15,17 @@
         type="time"
         :min="hours(departure)"
         :value="hours(arrival)"
-        @input="$emit('arrivalChanged', $event.target.value)"
+        @input="dateChanged('arrivalChanged', $event.target.value)"
       />
     </td>
-    <td>34,60</td>
+    <td>{{ expense() }}</td>
   </tr>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Moment } from "moment";
+import { dailyExpenses } from "./DayExpenses";
 import moment from "moment";
 
 @Component
@@ -40,6 +41,28 @@ export default class TravelRow extends Vue {
 
   weekDay(date: Date) {
     return moment(date).format("ddd");
+  }
+
+  expense() {
+    return dailyExpenses(
+      this.arrival,
+      this.departure,
+      false,
+      "inside",
+      "directors"
+    );
+  }
+
+  dateChanged(event: string, timeInput: string) {
+    const time = moment(timeInput, "HH:mm");
+    const dateTime = moment(this.day)
+      .set({
+        hour: time.get("hour"),
+        minute: time.get("minute")
+      })
+      .toDate();
+
+    this.$emit(event, dateTime);
   }
 }
 </script>
