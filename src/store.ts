@@ -6,6 +6,7 @@ import {
   TypeOfWorker,
   CountryTravel
 } from "./components/TravelTable/TraveTable.interfaces";
+import { dailyExpenses } from "./components/TravelTable/DayExpenses";
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ interface StoreState {
 interface StoreGetters {
   dateSimple: (state: StoreState) => string;
   daysInMonth: (state: StoreState) => number;
+  total: (state: StoreState) => number;
 }
 
 interface StoreMutations {
@@ -51,6 +53,19 @@ const store: {
     },
     daysInMonth: state => {
       return moment(state.date).daysInMonth();
+    },
+    total: state => {
+      return state.rows.reduce((acc: number, row: IRow) => {
+        const expense = dailyExpenses(
+          row.arrival,
+          row.departure,
+          false,
+          "inside",
+          state.workerType
+        );
+
+        return acc + expense;
+      }, 0);
     }
   },
   mutations: {

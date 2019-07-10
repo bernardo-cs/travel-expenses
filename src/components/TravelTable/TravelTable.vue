@@ -32,6 +32,11 @@
         ></travel-row>
       </tbody>
     </table>
+
+    <div>
+      <span>Total</span>
+      {{ total }}
+    </div>
   </div>
 </template>
 
@@ -55,6 +60,10 @@ export default class TravelTable extends Vue {
 
   get month() {
     return moment(this.$store.state.date).format("MMMM");
+  }
+
+  get total() {
+    return this.$store.getters.total;
   }
 
   onDateChange(date: string) {
