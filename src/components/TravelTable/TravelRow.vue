@@ -3,10 +3,20 @@
     <td>{{ day.getUTCDate() }} | {{ weekDay(day) }}</td>
     <td>{{ description }}</td>
     <td>
-      <input type="time" :max="hours(arrival)" :value="hours(departure)" />
+      <input
+        type="time"
+        :max="hours(arrival)"
+        :value="hours(departure)"
+        @input="$emit('departureChanged', $event.target.value)"
+      />
     </td>
     <td>
-      <input type="time" :min="hours(departure)" :value="hours(arrival)" />
+      <input
+        type="time"
+        :min="hours(departure)"
+        :value="hours(arrival)"
+        @input="$emit('arrivalChanged', $event.target.value)"
+      />
     </td>
     <td>34,60</td>
   </tr>

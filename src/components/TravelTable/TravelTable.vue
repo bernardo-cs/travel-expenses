@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>Current Month: {{ month }}</h3>
-    <month-selector v-on:date="onDateChange($event)"></month-selector>
+    <month-selector @date="onDateChange($event)"></month-selector>
     <table>
       <thead>
         <tr>
@@ -14,12 +14,14 @@
       </thead>
       <tbody>
         <travel-row
-          v-for="row in rows"
+          v-for="(row, index) in rows"
           :day="row.day"
           :description="row.service"
           :key="row.number"
           :departure="row.departure"
           :arrival="row.arrival"
+          @departureChanged="changeRow(index, 'departure', $event)"
+          @arrivalChanged="changeRow(index, 'arrival', $event)"
         ></travel-row>
       </tbody>
     </table>
@@ -37,7 +39,7 @@ import moment from "moment";
 @Component({ components: { TravelRow, MonthSelector } })
 export default class TravelTable extends Vue {
   get rows() {
-    return this.$store.getters.rows;
+    return this.$store.state.rows;
   }
 
   get month() {
@@ -46,6 +48,10 @@ export default class TravelTable extends Vue {
 
   onDateChange(date: string) {
     this.$store.commit("setDate", date);
+  }
+
+  changeRow(index: number, property: string, value: string) {
+    this.$store.commit("changeRow", { index, value, property });
   }
 }
 </script>

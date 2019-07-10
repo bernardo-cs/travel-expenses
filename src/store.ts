@@ -5,12 +5,38 @@ import { IRow } from "./components/TravelTable/TraveTable.interfaces";
 
 Vue.use(Vuex);
 
-export const INPUT_DATE_FORMAT = "yyyy-mm-dd";
-export default new Vuex.Store({
+interface StoreState {
+  date: Date;
+  rows: Array<IRow>;
+}
+
+interface StoreGetters {
+  dateSimple: (state: StoreState) => string;
+  daysInMonth: (state: StoreState) => number;
+}
+
+interface StoreMutations {
+  setDate: (state: StoreState, date: string | Date) => void;
+  changeRow: (
+    state: StoreState,
+    payload: { index: number; property: string; value: number }
+  ) => void;
+}
+
+const store: {
+  state: StoreState;
+  getters: StoreGetters;
+  mutations: StoreMutations;
+} = {
   state: {
     date: moment()
       .set("date", 1)
-      .toDate()
+      .toDate(),
+    rows: initRows(
+      moment()
+        .set("date", 1)
+        .toDate()
+    )
   },
   getters: {
     dateSimple: state => {
@@ -18,33 +44,38 @@ export default new Vuex.Store({
     },
     daysInMonth: state => {
       return moment(state.date).daysInMonth();
-    },
-    rows: (state, getters): Array<IRow> => {
-      return Array.from({ length: getters.daysInMonth }, (_, index) => {
-        return {
-          day: moment(state.date)
-            .set("date", 1 + index)
-            .toDate(),
-          service: "Deslocações",
-          departure: moment(state.date)
-            .set("date", 1 + index)
-            .set("hour", 8)
-            .toDate(),
-          arrival: moment(state.date)
-            .set("date", 1 + index)
-            .set("hour", 13)
-            .toDate()
-        };
-      });
     }
   },
   mutations: {
     setDate(state, date: string | Date) {
       const d = date instanceof Date ? date : new Date(date);
 
+      state.rows = initRows(d);
       state.date = moment(d)
         .set("d", 1)
         .toDate();
-    }
+    },
+    changeRow(state, payload) {}
   }
-});
+};
+
+export default new Vuex.Store<StoreState>(store as any);
+
+function initRows(date: Date): Array<IRow> {
+  return Array.from({ length: moment(date).daysInMonth() }, (_, index) => {
+    return {
+      day: moment(date)
+        .set("date", 1 + index)
+        .toDate(),
+      service: "Deslocações",
+      departure: moment(date)
+        .set("date", 1 + index)
+        .set("hour", 8)
+        .toDate(),
+      arrival: moment(date)
+        .set("date", 1 + index)
+        .set("hour", 13)
+        .toDate()
+    };
+  });
+}
