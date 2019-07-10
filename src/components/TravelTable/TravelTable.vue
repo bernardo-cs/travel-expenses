@@ -9,6 +9,8 @@
       <option value="others">Others</option>
     </select>
 
+    <label>Max daily compensation: {{ maxDailyCompensation}}</label>
+
     <table>
       <thead>
         <tr>
@@ -42,6 +44,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { maxDailyExpense } from "./DayExpenses";
 import TravelRow from "./TravelRow.vue";
 import MonthSelector from "./MonthSelector.vue";
 import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
@@ -64,6 +67,11 @@ export default class TravelTable extends Vue {
 
   get total() {
     return this.$store.getters.total;
+  }
+
+  get maxDailyCompensation(): number {
+    const workerType: TypeOfWorker = this.$store.state.workerType;
+    return maxDailyExpense.inside[workerType];
   }
 
   onDateChange(date: string) {

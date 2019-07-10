@@ -8,7 +8,7 @@ import {
 } from "./TraveTable.interfaces";
 
 const rangedMoment = extendMoment(Moment as any);
-const maxDailyExpense: MaxDailyExpense = {
+export const maxDailyExpense: MaxDailyExpense = {
   inside: { directors: 69.19, others: 50.2 },
   outside: { directors: 100.24, others: 89.35 }
 };
