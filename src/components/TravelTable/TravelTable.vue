@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>Current Month: {{ month }}</h3>
     <month-selector v-on:date="onDateChange($event)"></month-selector>
     <table>
       <thead>
@@ -22,48 +23,22 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import TravelRow from "./TravelRow.vue";
 import MonthSelector from "./MonthSelector.vue";
+import { IRow } from "./TraveTable.interfaces";
+import { mapGetters } from "vuex";
+import moment from "moment";
 
 @Component({ components: { TravelRow, MonthSelector } })
 export default class TravelTable extends Vue {
-  rows: Array<IRow> = [];
-
-  onDateChange(sDate: string) {
-    const r = rowsInMonth(sDate);
-    console.log(sDate, r.length);
-    this.rows = r;
+  get rows() {
+    return this.$store.getters.rows;
   }
 
-  created() {
-    this.onDateChange(new Date().toISOString().split("T")[0]);
+  get month() {
+    return moment(this.$store.state.date).format("MMMM");
   }
-}
 
-interface IRow {
-  number: Number;
-  service: String;
-  departureTime: String;
-  arrivalTime: String;
-}
-
-function daysInMonth(sDate: string): number {
-  const date = new Date(sDate);
-  const year = date.getFullYear();
-  const month = date.getMonth();
-
-  return new Date(year, month, 0).getDate();
-}
-
-function rowsInMonth(sDate: string): Array<IRow> {
-  const date = new Date(sDate);
-  const numberOfDays = daysInMonth(sDate);
-
-  return Array.from({ length: numberOfDays }, (val, index) => {
-    return {
-      number: index + 1,
-      service: "Deslocações",
-      departureTime: "18",
-      arrivalTime: "13"
-    };
-  });
+  onDateChange(date: string) {
+    this.$store.commit("setDate", date);
+  }
 }
 </script>
