@@ -91,19 +91,32 @@ export default new Vuex.Store<StoreState>(store as any);
 
 function initRows(date: Date): Array<IRow> {
   return Array.from({ length: moment(date).daysInMonth() }, (_, index) => {
-    return {
-      day: moment(date)
-        .set("date", 1 + index)
-        .toDate(),
-      service: "Deslocações",
-      departure: moment(date)
-        .set("date", 1 + index)
-        .set("hour", 8)
-        .toDate(),
-      arrival: moment(date)
-        .set("date", 1 + index)
-        .set("hour", 22)
-        .toDate()
-    };
+    const day = moment(date).set("date", 1 + index);
+
+    return [0, 6].includes(day.day())
+      ? {
+          day: day.toDate(),
+          service: "",
+          departure: day
+            .startOf("day")
+            .set("hour", 0)
+            .toDate(),
+          arrival: day
+            .startOf("day")
+            .set("hour", 0)
+            .toDate()
+        }
+      : {
+          day: day.toDate(),
+          service: "Deslocações",
+          departure: day
+            .startOf("day")
+            .set("hour", 8)
+            .toDate(),
+          arrival: day
+            .startOf("day")
+            .set("hour", 22)
+            .toDate()
+        };
   });
 }
