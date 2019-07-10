@@ -49,7 +49,7 @@ export default class TravelRow extends Vue {
       this.departure,
       false,
       "inside",
-      "directors"
+      this.$store.state.workerType
     );
   }
 

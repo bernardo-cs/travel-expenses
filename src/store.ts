@@ -3,7 +3,8 @@ import Vuex from "vuex";
 import moment from "moment";
 import {
   IRow,
-  TypeOfWorker
+  TypeOfWorker,
+  CountryTravel
 } from "./components/TravelTable/TraveTable.interfaces";
 
 Vue.use(Vuex);
@@ -25,6 +26,7 @@ interface StoreMutations {
     state: StoreState,
     payload: { index: number; property: keyof IRow; value: any }
   ) => void;
+  setWorkerType: (state: StoreState, workerType: TypeOfWorker) => void;
 }
 
 const store: {
@@ -63,6 +65,9 @@ const store: {
     changeRow(state, { index, property, value }) {
       const row = state.rows[index];
       row[property] = value;
+    },
+    setWorkerType(state, workerType) {
+      state.workerType = workerType;
     }
   }
 };

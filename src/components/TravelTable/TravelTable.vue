@@ -2,6 +2,13 @@
   <div>
     <h3>Current Month: {{ month }}</h3>
     <month-selector @date="onDateChange($event)"></month-selector>
+
+    <label for="type-of-worker">Type of worker:</label>
+    <select id="type-of-worker" :value="workerType" @input="setWorkerType($event.target.value)">
+      <option value="directors">Directors</option>
+      <option value="others">Others</option>
+    </select>
+
     <table>
       <thead>
         <tr>
@@ -32,7 +39,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import TravelRow from "./TravelRow.vue";
 import MonthSelector from "./MonthSelector.vue";
-import { IRow } from "./TraveTable.interfaces";
+import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
 import { mapGetters } from "vuex";
 import moment from "moment";
 
@@ -40,6 +47,10 @@ import moment from "moment";
 export default class TravelTable extends Vue {
   get rows() {
     return this.$store.state.rows;
+  }
+
+  get workerType() {
+    return this.$store.state.workerType;
   }
 
   get month() {
@@ -52,6 +63,10 @@ export default class TravelTable extends Vue {
 
   changeRow(index: number, property: string, value: string) {
     this.$store.commit("changeRow", { index, value, property });
+  }
+
+  setWorkerType(workerType: TypeOfWorker) {
+    this.$store.commit("setWorkerType", workerType);
   }
 }
 </script>
