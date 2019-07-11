@@ -3,19 +3,27 @@
     <td>{{ day.getUTCDate() }} | {{ weekDay(day) }}</td>
     <td>{{ description }}</td>
     <td>
-      <input
-        type="time"
-        :max="hours(arrival)"
+      <VueCtkDateTimePicker
+        format="hh:mm a"
+        formatted="hh:mm a"
+        inputSize="sm"
+        :minuteInterval="10"
+        :onlyTime="true"
+        :noLabel="true"
         :value="hours(departure)"
-        @input="dateChanged('departureChanged', $event.target.value)"
+        @input="dateChanged('departureChanged', $event)"
       />
     </td>
     <td>
-      <input
-        type="time"
-        :min="hours(departure)"
+      <VueCtkDateTimePicker
+        format="hh:mm a"
+        formatted="hh:mm a"
+        inputSize="sm"
+        :minuteInterval="10"
+        :onlyTime="true"
+        :noLabel="true"
         :value="hours(arrival)"
-        @input="dateChanged('arrivalChanged', $event.target.value)"
+        @input="dateChanged('arrivalChanged', $event)"
       />
     </td>
     <td>
@@ -36,8 +44,9 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import { Moment } from "moment";
 import { dailyExpenses } from "./DayExpenses";
 import moment from "moment";
+import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
 
-@Component
+@Component({ components: { VueCtkDateTimePicker } })
 export default class TravelRow extends Vue {
   @Prop() public day!: Date;
   @Prop() public description!: Date;
@@ -47,7 +56,7 @@ export default class TravelRow extends Vue {
   @Prop() public outsideCountry!: boolean;
 
   hours(date: Date) {
-    return moment(date).format("HH:mm");
+    return moment(date).format("HH:mm a");
   }
 
   weekDay(date: Date) {
@@ -57,7 +66,6 @@ export default class TravelRow extends Vue {
   expense() {
     const outsideCountry = this.outsideCountry ? "outside" : "inside";
 
-    console.log(this.sleepover);
     return dailyExpenses(
       this.arrival,
       this.departure,
@@ -68,7 +76,7 @@ export default class TravelRow extends Vue {
   }
 
   dateChanged(event: string, timeInput: string) {
-    const time = moment(timeInput, "HH:mm");
+    const time = moment(timeInput, "HH:mm a");
     const dateTime = moment(this.day)
       .set({
         hour: time.get("hour"),
