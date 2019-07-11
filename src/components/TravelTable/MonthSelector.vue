@@ -1,14 +1,27 @@
 <template>
-  <div>
-    <input type="date" v-model="date" @input="$emit('date', $event.target.value)" />
-  </div>
+  <select id="month-selector" :value="monthIndex" @input="setMonth($event.target.value)">
+    <option v-for="month in months" :key="month.index" :value="month.index">{{month.name}}</option>
+  </select>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
+import moment from "moment";
 
 @Component
 export default class MonthSelector extends Vue {
-  date: string = new Date().toISOString().split("T")[0];
+  @Prop() date!: Date;
+
+  get monthIndex() {
+    return moment(this.date).month();
+  }
+
+  get months() {
+    return moment.months().map((name, index) => ({ name, index }));
+  }
+
+  setMonth(month: number) {
+    this.$emit("date", moment(this.date).set("month", month));
+  }
 }
 </script>

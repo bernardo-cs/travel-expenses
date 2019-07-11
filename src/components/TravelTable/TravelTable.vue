@@ -57,9 +57,8 @@ import MonthSelector from "./MonthSelector.vue";
 import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
 import { mapGetters } from "vuex";
 import moment from "moment";
-import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
 
-@Component({ components: { TravelRow, MonthSelector, VueCtkDateTimePicker } })
+@Component({ components: { TravelRow, MonthSelector } })
 export default class TravelTable extends Vue {
   get rows() {
     return this.$store.state.rows;
