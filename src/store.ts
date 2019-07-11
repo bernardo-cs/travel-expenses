@@ -56,11 +56,12 @@ const store: {
     },
     total: state => {
       return state.rows.reduce((acc: number, row: IRow) => {
+        const countryTravel = row.outsideCountry ? "inside" : "outside";
         const expense = dailyExpenses(
           row.arrival,
           row.departure,
-          false,
-          "inside",
+          row.sleepOver,
+          countryTravel,
           state.workerType
         );
 
@@ -77,7 +78,14 @@ const store: {
         .set("d", 1)
         .toDate();
     },
-    changeRow(state, { index, property, value }) {
+    changeRow(
+      state: StoreState,
+      {
+        index,
+        property,
+        value
+      }: { index: number; property: keyof IRow; value: Date | string | boolean }
+    ) {
       const row = state.rows[index];
       row[property] = value;
     },
@@ -97,6 +105,8 @@ function initRows(date: Date): Array<IRow> {
       ? {
           day: day.toDate(),
           service: "",
+          sleepOver: false,
+          outsideCountry: false,
           departure: day
             .startOf("day")
             .set("hour", 0)
@@ -109,6 +119,8 @@ function initRows(date: Date): Array<IRow> {
       : {
           day: day.toDate(),
           service: "Deslocações",
+          outsideCountry: false,
+          sleepOver: false,
           departure: day
             .startOf("day")
             .set("hour", 8)

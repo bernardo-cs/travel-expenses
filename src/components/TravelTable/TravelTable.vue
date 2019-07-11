@@ -9,7 +9,8 @@
       <option value="others">Others</option>
     </select>
 
-    <label>Max daily compensation: {{ maxDailyCompensation}}</label>
+    <label>Max daily compensation for travels inside country: {{ maxDailyCompensation}}</label>
+    <label>Max daily compensation for travels outside the country: {{ maxDailyCompensationOutsideCountry }}</label>
 
     <table>
       <thead>
@@ -18,6 +19,8 @@
           <th>Serviço</th>
           <th>Hora de Saida</th>
           <th>Hora de Chegada</th>
+          <th>Pernoita</th>
+          <th>Fora do Pais</th>
           <th>Valor</th>
         </tr>
       </thead>
@@ -29,8 +32,12 @@
           :key="row.number"
           :departure="row.departure"
           :arrival="row.arrival"
+          :sleepover="row.sleepOver"
+          :outsideCountry="row.outsideCountry"
           @departureChanged="changeRow(index, 'departure', $event)"
           @arrivalChanged="changeRow(index, 'arrival', $event)"
+          @outsideCountryChanged="changeRow(index, 'outsideCountry', $event)"
+          @sleepoverChanged="changeRow(index, 'sleepOver', $event)"
         ></travel-row>
       </tbody>
     </table>
@@ -74,11 +81,16 @@ export default class TravelTable extends Vue {
     return maxDailyExpense.inside[workerType];
   }
 
+  get maxDailyCompensationOutsideCountry(): number {
+    const workerType: TypeOfWorker = this.$store.state.workerType;
+    return maxDailyExpense.outside[workerType];
+  }
+
   onDateChange(date: string) {
     this.$store.commit("setDate", date);
   }
 
-  changeRow(index: number, property: string, value: string) {
+  changeRow(index: number, property: keyof IRow, value: string) {
     this.$store.commit("changeRow", { index, value, property });
   }
 

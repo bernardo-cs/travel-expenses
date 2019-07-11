@@ -5,6 +5,8 @@ export interface IRow {
   service: string;
   departure: Date;
   arrival: Date;
+  sleepOver: boolean;
+  outsideCountry: boolean;
 }
 
 export interface MaxDailyExpense {

@@ -18,6 +18,15 @@
         @input="dateChanged('arrivalChanged', $event.target.value)"
       />
     </td>
+    <td>
+      <input type="checkbox" @input="checkboxChanged('sleepoverChanged', $event.target.checked)" />
+    </td>
+    <td>
+      <input
+        type="checkbox"
+        @input="checkboxChanged('outsideCountryChanged', $event.target.checked)"
+      />
+    </td>
     <td>{{ expense() }}</td>
   </tr>
 </template>
@@ -34,6 +43,8 @@ export default class TravelRow extends Vue {
   @Prop() public description!: Date;
   @Prop() public arrival!: Date;
   @Prop() public departure!: Date;
+  @Prop() public sleepover!: boolean;
+  @Prop() public outsideCountry!: boolean;
 
   hours(date: Date) {
     return moment(date).format("HH:mm");
@@ -44,11 +55,14 @@ export default class TravelRow extends Vue {
   }
 
   expense() {
+    const outsideCountry = this.outsideCountry ? "outside" : "inside";
+
+    console.log(this.sleepover);
     return dailyExpenses(
       this.arrival,
       this.departure,
-      false,
-      "inside",
+      this.sleepover,
+      outsideCountry,
       this.$store.state.workerType
     );
   }
@@ -63,6 +77,10 @@ export default class TravelRow extends Vue {
       .toDate();
 
     this.$emit(event, dateTime);
+  }
+
+  checkboxChanged(event: string, value: boolean) {
+    this.$emit(event, value);
   }
 }
 </script>
