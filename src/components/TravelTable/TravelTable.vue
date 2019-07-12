@@ -25,13 +25,13 @@
     <table>
       <thead>
         <tr>
-          <th>Dia</th>
-          <th>Serviço</th>
-          <th>Hora de Saida</th>
-          <th>Hora de Chegada</th>
-          <th>Pernoita</th>
-          <th>Fora do Pais</th>
-          <th>Valor</th>
+          <th>Day</th>
+          <th>Service</th>
+          <th>Departure</th>
+          <th>Arrival</th>
+          <th>Sleep Over</th>
+          <th>Outside Country</th>
+          <th>Compensation</th>
         </tr>
       </thead>
       <tbody>

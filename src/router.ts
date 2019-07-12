@@ -9,12 +9,11 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      redirect: "/expenses"
     },
     {
-      path: "/despesas",
-      name: "despesas",
+      path: "/expenses",
+      name: "expenses",
       component: () => import("./views/Expenses.vue")
     },
     {
