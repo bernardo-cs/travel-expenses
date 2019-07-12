@@ -27,11 +27,16 @@
       />
     </td>
     <td>
-      <input type="checkbox" @input="checkboxChanged('sleepoverChanged', $event.target.checked)" />
+      <input
+        type="checkbox"
+        @mouseover="mouseOverCheckBox($event, 'sleepoverChanged')"
+        @input="checkboxChanged('sleepoverChanged', $event.target.checked)"
+      />
     </td>
     <td>
       <input
         type="checkbox"
+        @mouseover="mouseOverCheckBox($event, 'outsideCountryChanged')"
         @input="checkboxChanged('outsideCountryChanged', $event.target.checked)"
       />
     </td>
@@ -97,6 +102,13 @@ export default class TravelRow extends Vue {
 
   checkboxChanged(event: string, value: boolean) {
     this.$emit(event, value);
+  }
+
+  mouseOverCheckBox(event: any, eventName: string) {
+    if (event.buttons == 1 || event.buttons == 3) {
+      event.target.checked = !event.target.checked;
+      this.$emit(eventName, event.target.checked);
+    }
   }
 }
 </script>
