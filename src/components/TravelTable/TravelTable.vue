@@ -13,14 +13,14 @@
       <option value="others">Others</option>
     </select>
 
-    <label
-      >Max daily compensation for travels inside country:
-      {{ maxDailyCompensation }}</label
-    >
-    <label
-      >Max daily compensation for travels outside the country:
-      {{ maxDailyCompensationOutsideCountry }}</label
-    >
+    <label>
+      Max daily compensation for travels inside country:
+      {{ maxDailyCompensation }}
+    </label>
+    <label>
+      Max daily compensation for travels outside the country:
+      {{ maxDailyCompensationOutsideCountry }}
+    </label>
 
     <table>
       <thead>
@@ -71,7 +71,7 @@ import moment from "moment";
 @Component({ components: { TravelRow, MonthSelector } })
 export default class TravelTable extends Vue {
   get rows() {
-    return this.$store.state.rows;
+    return this.$store.getters.rows;
   }
 
   get workerType() {

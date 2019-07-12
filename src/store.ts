@@ -11,14 +11,15 @@ Vue.use(Vuex);
 
 interface StoreState {
   date: Date;
-  rows: Array<IRow>;
+  rowsByMonth: { [k: string]: Array<IRow> };
   workerType: TypeOfWorker;
 }
 
 interface StoreGetters {
-  dateSimple: (state: StoreState) => string;
+  currentMonth: (state: StoreState) => string;
+  rows: (state: StoreState, getters: { currentMonth: string }) => Array<IRow>;
   daysInMonth: (state: StoreState) => number;
-  total: (state: StoreState) => number;
+  total: (state: StoreState, setters: { rows: Array<IRow> }) => number;
 }
 
 interface StoreMutations {
@@ -42,31 +43,34 @@ interface StoreMutations {
   setWorkerType: (state: StoreState, workerType: TypeOfWorker) => void;
 }
 
+const ROWS_FORMAT = "MM-YYYY";
+const initialDate = moment().set("date", 1);
+
+const rowsByMonth: { [k: string]: Array<IRow> } = {};
+rowsByMonth[initialDate.format(ROWS_FORMAT)] = initRows(initialDate.toDate());
+
 const store: {
   state: StoreState;
   getters: StoreGetters;
   mutations: StoreMutations;
 } = {
   state: {
-    date: moment()
-      .set("date", 1)
-      .toDate(),
-    rows: initRows(
-      moment()
-        .set("date", 1)
-        .toDate()
-    ),
+    date: initialDate.toDate(),
+    rowsByMonth,
     workerType: "directors"
   },
   getters: {
-    dateSimple: state => {
-      return state.date.toISOString().split("T")[0];
+    currentMonth: state => {
+      return moment(state.date).format(ROWS_FORMAT);
+    },
+    rows: (state, getters) => {
+      return state.rowsByMonth[getters.currentMonth];
     },
     daysInMonth: state => {
       return moment(state.date).daysInMonth();
     },
-    total: state => {
-      return state.rows.reduce((acc: number, row: IRow) => {
+    total: (state, getters) => {
+      return getters.rows.reduce((acc: number, row: IRow) => {
         const countryTravel = row.outsideCountry ? "inside" : "outside";
         const expense = dailyExpenses(
           row.arrival,
@@ -84,34 +88,39 @@ const store: {
     setDate(state, date: string | Date) {
       const d = date instanceof Date ? date : new Date(date);
 
-      state.rows = initRows(d);
       state.date = moment(d)
         .set("d", 1)
         .toDate();
+
+      currentMonthRows(state);
     },
     setDeparture(
       state: StoreState,
       { index, date }: { index: number; date: Date }
     ) {
-      state.rows[index].departure = date;
+      const rows = currentMonthRows(state);
+      rows[index].departure = date;
     },
     setArrival(
       state: StoreState,
       { index, date }: { index: number; date: Date }
     ) {
-      state.rows[index].arrival = date;
+      const rows = currentMonthRows(state);
+      rows[index].arrival = date;
     },
     setSleepOver(
       state: StoreState,
       { index, value }: { index: number; value: boolean }
     ) {
-      state.rows[index].sleepOver = value;
+      const rows = currentMonthRows(state);
+      rows[index].sleepOver = value;
     },
     setOutsideCountry(
       state: StoreState,
       { index, value }: { index: number; value: boolean }
     ) {
-      state.rows[index].outsideCountry = value;
+      const rows = currentMonthRows(state);
+      rows[index].outsideCountry = value;
     },
     setWorkerType(state, workerType) {
       state.workerType = workerType;
@@ -149,4 +158,15 @@ function initRows(date: Date): Array<IRow> {
             .toDate()
         };
   });
+}
+
+function currentMonthRows(state: StoreState): Array<IRow> {
+  if (state.rowsByMonth[moment(state.date).format(ROWS_FORMAT)]) {
+    return state.rowsByMonth[moment(state.date).format(ROWS_FORMAT)];
+  } else {
+    const r = initRows(state.date);
+    state.rowsByMonth[moment(state.date).format(ROWS_FORMAT)] = r;
+
+    return r;
+  }
 }

@@ -30,12 +30,14 @@
       <input
         type="checkbox"
         @mouseover="mouseOverCheckBox($event, 'sleepoverChanged')"
+        :checked="sleepover"
         @input="checkboxChanged('sleepoverChanged', $event.target.checked)"
       />
     </td>
     <td>
       <input
         type="checkbox"
+        :checked="outsideCountry"
         @mouseover="mouseOverCheckBox($event, 'outsideCountryChanged')"
         @input="checkboxChanged('outsideCountryChanged', $event.target.checked)"
       />
