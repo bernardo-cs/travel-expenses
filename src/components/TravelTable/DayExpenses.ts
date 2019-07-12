@@ -16,7 +16,11 @@ export const maxDailyExpense: MaxDailyExpense = {
 const expenseRules = [
   {
     name: "Lunch Expense",
-    apply: (arrival: Date, departure: Date, sleepOver: boolean) => {
+    apply: (
+      arrival: Date | undefined,
+      departure: Date | undefined,
+      sleepOver: boolean
+    ) => {
       if (!arrival && !departure) {
         return sleepOver ? 0.25 : 0;
       }
@@ -48,7 +52,11 @@ const expenseRules = [
   },
   {
     name: "Dinner Expense",
-    apply: (arrival: Date, departure: Date, sleepOver: boolean) => {
+    apply: (
+      arrival: Date | undefined,
+      departure: Date | undefined,
+      sleepOver: boolean
+    ) => {
       if (!arrival && !departure) {
         return sleepOver ? 0.25 : 0;
       }
@@ -80,7 +88,11 @@ const expenseRules = [
   },
   {
     name: "Accomodation Expense",
-    apply: (_: Date, __: Date, accomodation: boolean) => {
+    apply: (
+      _: Date | undefined,
+      __: Date | undefined,
+      accomodation: boolean
+    ) => {
       return accomodation ? 0.5 : 0;
     }
   }

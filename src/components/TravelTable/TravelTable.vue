@@ -34,10 +34,10 @@
           :arrival="row.arrival"
           :sleepover="row.sleepOver"
           :outsideCountry="row.outsideCountry"
-          @departureChanged="changeRow(index, 'departure', $event)"
-          @arrivalChanged="changeRow(index, 'arrival', $event)"
-          @outsideCountryChanged="changeRow(index, 'outsideCountry', $event)"
-          @sleepoverChanged="changeRow(index, 'sleepOver', $event)"
+          @departureChanged="setDeparture(index, $event)"
+          @arrivalChanged="setArrival(index, $event)"
+          @outsideCountryChanged="setOutsideCountry(index, $event)"
+          @sleepoverChanged="setSleepOver(index, $event)"
         ></travel-row>
       </tbody>
     </table>
@@ -90,8 +90,20 @@ export default class TravelTable extends Vue {
     this.$store.commit("setDate", date);
   }
 
-  changeRow(index: number, property: keyof IRow, value: string) {
-    this.$store.commit("changeRow", { index, value, property });
+  setDeparture(index: number, date: Date) {
+    this.$store.commit("setDeparture", { index, date });
+  }
+
+  setArrival(index: number, date: Date) {
+    this.$store.commit("setArrival", { index, date });
+  }
+
+  setSleepOver(index: number, value: boolean) {
+    this.$store.commit("setSleepOver", { index, value });
+  }
+
+  setOutsideCountry(index: number, value: boolean) {
+    this.$store.commit("setOutsideCountry", { index, value });
   }
 
   setWorkerType(workerType: TypeOfWorker) {

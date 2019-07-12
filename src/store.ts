@@ -3,8 +3,7 @@ import Vuex from "vuex";
 import moment from "moment";
 import {
   IRow,
-  TypeOfWorker,
-  CountryTravel
+  TypeOfWorker
 } from "./components/TravelTable/TraveTable.interfaces";
 import { dailyExpenses } from "./components/TravelTable/DayExpenses";
 
@@ -24,9 +23,21 @@ interface StoreGetters {
 
 interface StoreMutations {
   setDate: (state: StoreState, date: string | Date) => void;
-  changeRow: (
+  setDeparture: (
     state: StoreState,
-    payload: { index: number; property: keyof IRow; value: any }
+    { index, date }: { index: number; date: Date }
+  ) => void;
+  setArrival: (
+    state: StoreState,
+    { index, date }: { index: number; date: Date }
+  ) => void;
+  setSleepOver: (
+    state: StoreState,
+    { index, value }: { index: number; value: boolean }
+  ) => void;
+  setOutsideCountry: (
+    state: StoreState,
+    { index, value }: { index: number; value: boolean }
   ) => void;
   setWorkerType: (state: StoreState, workerType: TypeOfWorker) => void;
 }
@@ -78,16 +89,29 @@ const store: {
         .set("d", 1)
         .toDate();
     },
-    changeRow(
+    setDeparture(
       state: StoreState,
-      {
-        index,
-        property,
-        value
-      }: { index: number; property: keyof IRow; value: Date | string | boolean }
+      { index, date }: { index: number; date: Date }
     ) {
-      const row = state.rows[index];
-      row[property] = value;
+      state.rows[index].departure = date;
+    },
+    setArrival(
+      state: StoreState,
+      { index, date }: { index: number; date: Date }
+    ) {
+      state.rows[index].arrival = date;
+    },
+    setSleepOver(
+      state: StoreState,
+      { index, value }: { index: number; value: boolean }
+    ) {
+      state.rows[index].sleepOver = value;
+    },
+    setOutsideCountry(
+      state: StoreState,
+      { index, value }: { index: number; value: boolean }
+    ) {
+      state.rows[index].outsideCountry = value;
     },
     setWorkerType(state, workerType) {
       state.workerType = workerType;
