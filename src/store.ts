@@ -107,14 +107,8 @@ function initRows(date: Date): Array<IRow> {
           service: "",
           sleepOver: false,
           outsideCountry: false,
-          departure: day
-            .startOf("day")
-            .set("hour", 0)
-            .toDate(),
-          arrival: day
-            .startOf("day")
-            .set("hour", 0)
-            .toDate()
+          departure: undefined,
+          arrival: undefined
         }
       : {
           day: day.toDate(),

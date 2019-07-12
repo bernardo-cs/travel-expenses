@@ -56,6 +56,10 @@ export default class TravelRow extends Vue {
   @Prop() public outsideCountry!: boolean;
 
   hours(date: Date) {
+    if (!date) {
+      return date;
+    }
+
     return moment(date).format("HH:mm a");
   }
 
@@ -76,6 +80,10 @@ export default class TravelRow extends Vue {
   }
 
   dateChanged(event: string, timeInput: string) {
+    if (!timeInput) {
+      return this.$emit(event, timeInput);
+    }
+
     const time = moment(timeInput, "HH:mm a");
     const dateTime = moment(this.day)
       .set({

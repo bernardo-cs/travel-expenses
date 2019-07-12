@@ -16,7 +16,23 @@ export const maxDailyExpense: MaxDailyExpense = {
 const expenseRules = [
   {
     name: "Lunch Expense",
-    apply: (arrival: Date, departure: Date, _: boolean) => {
+    apply: (arrival: Date, departure: Date, sleepOver: boolean) => {
+      if (!arrival && !departure) {
+        return sleepOver ? 0.25 : 0;
+      }
+
+      if (!arrival) {
+        arrival = moment(departure)
+          .endOf("day")
+          .toDate();
+      }
+
+      if (!departure) {
+        departure = moment(arrival)
+          .startOf("day")
+          .toDate();
+      }
+
       const travelRange = rangedMoment.range(departure, arrival);
       const lunchBreak = rangedMoment.range(
         moment(arrival)
@@ -32,7 +48,23 @@ const expenseRules = [
   },
   {
     name: "Dinner Expense",
-    apply: (arrival: Date, departure: Date, _: boolean) => {
+    apply: (arrival: Date, departure: Date, sleepOver: boolean) => {
+      if (!arrival && !departure) {
+        return sleepOver ? 0.25 : 0;
+      }
+
+      if (!arrival) {
+        arrival = moment(departure)
+          .endOf("day")
+          .toDate();
+      }
+
+      if (!departure) {
+        departure = moment(arrival)
+          .startOf("day")
+          .toDate();
+      }
+
       const travelRange = rangedMoment.range(departure, arrival);
       const dinnerBreak = rangedMoment.range(
         moment(arrival)
@@ -55,8 +87,8 @@ const expenseRules = [
 ];
 
 export function dailyExpenses(
-  arrival: Date,
-  departure: Date,
+  arrival: Date | undefined,
+  departure: Date | undefined,
   accomodation: boolean,
   countryTravelType: CountryTravel,
   workerType: TypeOfWorker

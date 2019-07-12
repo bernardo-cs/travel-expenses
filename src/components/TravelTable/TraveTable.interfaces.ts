@@ -3,8 +3,8 @@ import { Moment } from "moment";
 export interface IRow {
   day: Date;
   service: string;
-  departure: Date;
-  arrival: Date;
+  departure?: Date;
+  arrival?: Date;
   sleepOver: boolean;
   outsideCountry: boolean;
 }
