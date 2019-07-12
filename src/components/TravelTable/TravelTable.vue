@@ -4,13 +4,23 @@
     <month-selector @date="onDateChange($event)"></month-selector>
 
     <label for="type-of-worker">Type of worker:</label>
-    <select id="type-of-worker" :value="workerType" @input="setWorkerType($event.target.value)">
+    <select
+      id="type-of-worker"
+      :value="workerType"
+      @input="setWorkerType($event.target.value)"
+    >
       <option value="directors">Directors</option>
       <option value="others">Others</option>
     </select>
 
-    <label>Max daily compensation for travels inside country: {{ maxDailyCompensation}}</label>
-    <label>Max daily compensation for travels outside the country: {{ maxDailyCompensationOutsideCountry }}</label>
+    <label
+      >Max daily compensation for travels inside country:
+      {{ maxDailyCompensation }}</label
+    >
+    <label
+      >Max daily compensation for travels outside the country:
+      {{ maxDailyCompensationOutsideCountry }}</label
+    >
 
     <table>
       <thead>

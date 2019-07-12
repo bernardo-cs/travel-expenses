@@ -1,6 +1,12 @@
 <template>
-  <select id="month-selector" :value="monthIndex" @input="setMonth($event.target.value)">
-    <option v-for="month in months" :key="month.index" :value="month.index">{{month.name}}</option>
+  <select
+    id="month-selector"
+    :value="monthIndex"
+    @input="setMonth($event.target.value)"
+  >
+    <option v-for="month in months" :key="month.index" :value="month.index">{{
+      month.name
+    }}</option>
   </select>
 </template>
 
