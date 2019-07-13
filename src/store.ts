@@ -36,6 +36,10 @@ interface StoreMutations {
     state: StoreState,
     { index, value }: { index: number; value: boolean }
   ) => void;
+  setService: (
+    state: StoreState,
+    payload: { index: number; service: string }
+  ) => void;
   setOutsideCountry: (
     state: StoreState,
     { index, value }: { index: number; value: boolean }
@@ -93,6 +97,10 @@ const store: {
         .toDate();
 
       currentMonthRows(state);
+    },
+    setService(state: StoreState, payload: { index: number; service: string }) {
+      const rows = currentMonthRows(state);
+      rows[payload.index].service = payload.service;
     },
     setDeparture(
       state: StoreState,

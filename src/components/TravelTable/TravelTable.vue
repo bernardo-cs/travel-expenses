@@ -4,11 +4,7 @@
     <month-selector @date="onDateChange($event)"></month-selector>
 
     <label for="type-of-worker">Type of worker:</label>
-    <select
-      id="type-of-worker"
-      :value="workerType"
-      @input="setWorkerType($event.target.value)"
-    >
+    <select id="type-of-worker" :value="workerType" @input="setWorkerType($event.target.value)">
       <option value="directors">Directors</option>
       <option value="others">Others</option>
     </select>
@@ -45,6 +41,7 @@
           :sleepover="row.sleepOver"
           :outsideCountry="row.outsideCountry"
           @departureChanged="setDeparture(index, $event)"
+          @descriptionChanged="setService(index, $event)"
           @arrivalChanged="setArrival(index, $event)"
           @outsideCountryChanged="setOutsideCountry(index, $event)"
           @sleepoverChanged="setSleepOver(index, $event)"
@@ -102,6 +99,10 @@ export default class TravelTable extends Vue {
 
   setDeparture(index: number, date: Date) {
     this.$store.commit("setDeparture", { index, date });
+  }
+
+  setService(index: number, service: string) {
+    this.$store.commit("setService", { index, service });
   }
 
   setArrival(index: number, date: Date) {

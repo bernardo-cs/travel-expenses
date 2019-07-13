@@ -1,7 +1,9 @@
 <template>
   <tr>
     <td>{{ day.getUTCDate() }} | {{ weekDay(day) }}</td>
-    <td>{{ description }}</td>
+    <td>
+      <input type="text" :value="description" @input="descriptionChanged($event.target.value)" />
+    </td>
     <td>
       <VueCtkDateTimePicker
         format="hh:mm a"
@@ -84,6 +86,10 @@ export default class TravelRow extends Vue {
       outsideCountry,
       this.$store.state.workerType
     );
+  }
+
+  descriptionChanged(description: string) {
+    this.$emit("descriptionChanged", description);
   }
 
   dateChanged(event: string, timeInput: string) {
