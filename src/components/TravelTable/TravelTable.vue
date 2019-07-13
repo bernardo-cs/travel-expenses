@@ -3,6 +3,8 @@
     <h3>
       Current Month:
       <month-selector @date="onDateChange($event)"></month-selector>
+      <button @click="autoFill()">Autofill {{ month }}</button>
+      <button @click="clear()">Clear {{ month }}</button>
     </h3>
 
     <label for="type-of-worker">Type of worker:</label>
@@ -48,6 +50,7 @@
           :sleepover="row.sleepOver"
           :outsideCountry="row.outsideCountry"
           @clearRow="clearRow(index)"
+          @autoFillRow="autoFillRow(index)"
           @departureChanged="setDeparture(index, $event)"
           @descriptionChanged="setService(index, $event)"
           @arrivalChanged="setArrival(index, $event)"
@@ -132,6 +135,18 @@ export default class TravelTable extends Vue {
 
   clearRow(index: number) {
     this.$store.commit("clearRow", index);
+  }
+
+  autoFillRow(index: number) {
+    this.$store.commit("autoFillRow", index);
+  }
+
+  autoFill() {
+    this.$store.commit("autoFillRows");
+  }
+
+  clear() {
+    this.$store.commit("clearRows");
   }
 }
 </script>

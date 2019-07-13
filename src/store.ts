@@ -41,6 +41,9 @@ interface StoreMutations {
     state: StoreState,
     payload: { index: number; service: string }
   ) => void;
+  autoFillRow: (state: StoreState, index: number) => void;
+  clearRows: (state: StoreState) => void;
+  autoFillRows: (state: StoreState, index: number) => void;
   setOutsideCountry: (
     state: StoreState,
     { index, value }: { index: number; value: boolean }
@@ -103,6 +106,17 @@ const store: {
       const rows = currentMonthRows(state);
       rows[payload.index].service = payload.service;
     },
+    clearRows(state: StoreState) {
+      const rows = currentMonthRows(state);
+
+      rows.forEach(row => {
+        row.departure = undefined;
+        row.arrival = undefined;
+        row.service = "";
+        row.sleepOver = false;
+        row.outsideCountry = false;
+      });
+    },
     clearRow(state: StoreState, index: number) {
       const rows = currentMonthRows(state);
 
@@ -125,6 +139,26 @@ const store: {
     ) {
       const rows = currentMonthRows(state);
       rows[index].arrival = date;
+    },
+    autoFillRow(state: StoreState, index: number) {
+      const rows = currentMonthRows(state);
+
+      rows[index].service = "Deslocações";
+      rows[index].outsideCountry = false;
+      rows[index].sleepOver = false;
+      rows[index].departure = moment(rows[index].day)
+        .startOf("day")
+        .set("hour", 9)
+        .toDate();
+      rows[index].arrival = moment(rows[index].day)
+        .startOf("day")
+        .set("hour", 18)
+        .toDate();
+    },
+    autoFillRows(state: StoreState, index: number) {
+      state.rowsByMonth[moment(state.date).format(ROWS_FORMAT)] = autoFillRows(
+        state.date
+      );
     },
     setSleepOver(
       state: StoreState,
@@ -152,29 +186,48 @@ function initRows(date: Date): Array<IRow> {
   return Array.from({ length: moment(date).daysInMonth() }, (_, index) => {
     const day = moment(date).set("date", 1 + index);
 
-    return [0, 6].includes(day.day())
-      ? {
-          day: day.toDate(),
-          service: "",
-          sleepOver: false,
-          outsideCountry: false,
-          departure: undefined,
-          arrival: undefined
-        }
-      : {
-          day: day.toDate(),
-          service: "Deslocações",
-          outsideCountry: false,
-          sleepOver: false,
-          departure: day
-            .startOf("day")
-            .set("hour", 9)
-            .toDate(),
-          arrival: day
-            .startOf("day")
-            .set("hour", 18)
-            .toDate()
-        };
+    return {
+      day: day.toDate(),
+      service: "",
+      sleepOver: false,
+      outsideCountry: false,
+      departure: undefined,
+      arrival: undefined
+    };
+  });
+}
+
+function autoFillRow(index: number, date: Date): IRow {
+  const day = moment(date).set("date", 1 + index);
+
+  return [0, 6].includes(day.day())
+    ? {
+        day: day.toDate(),
+        service: "",
+        sleepOver: false,
+        outsideCountry: false,
+        departure: undefined,
+        arrival: undefined
+      }
+    : {
+        day: day.toDate(),
+        service: "Deslocações",
+        outsideCountry: false,
+        sleepOver: false,
+        departure: day
+          .startOf("day")
+          .set("hour", 9)
+          .toDate(),
+        arrival: day
+          .startOf("day")
+          .set("hour", 18)
+          .toDate()
+      };
+}
+
+function autoFillRows(date: Date): Array<IRow> {
+  return Array.from({ length: moment(date).daysInMonth() }, (_, index) => {
+    return autoFillRow(index, date);
   });
 }
 

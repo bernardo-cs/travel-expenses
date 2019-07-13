@@ -2,10 +2,15 @@
   <tr>
     <td>
       <button @click="$emit('clearRow')">X</button>
+      <button @click="$emit('autoFillRow')">AutoFill</button>
     </td>
     <td>{{ day.getUTCDate() }} | {{ weekDay(day) }}</td>
     <td>
-      <input type="text" :value="description" @input="descriptionChanged($event.target.value)" />
+      <input
+        type="text"
+        :value="description"
+        @input="descriptionChanged($event.target.value)"
+      />
     </td>
     <td>
       <VueCtkDateTimePicker
