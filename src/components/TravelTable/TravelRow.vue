@@ -5,11 +5,7 @@
     </td>
     <td>{{ day.getUTCDate() }} | {{ weekDay(day) }}</td>
     <td>
-      <input
-        type="text"
-        :value="description"
-        @input="descriptionChanged($event.target.value)"
-      />
+      <input type="text" :value="description" @input="descriptionChanged($event.target.value)" />
     </td>
     <td>
       <VueCtkDateTimePicker
@@ -40,7 +36,6 @@
         type="checkbox"
         :checked="sleepover"
         @mouseover="mouseOverCheckBox($event, 'sleepoverChanged')"
-        @mousedown="mouseOverCheckBox($event, 'sleepoverChanged')"
         @input="checkboxChanged('sleepoverChanged', $event.target.checked)"
       />
     </td>
@@ -48,7 +43,6 @@
       <input
         type="checkbox"
         :checked="outsideCountry"
-        @mousedown="mouseOverCheckBox($event, 'outsideCountryChanged')"
         @mouseover="mouseOverCheckBox($event, 'outsideCountryChanged')"
         @input="checkboxChanged('outsideCountryChanged', $event.target.checked)"
       />
