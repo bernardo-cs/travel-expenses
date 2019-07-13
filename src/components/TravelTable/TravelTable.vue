@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h3>Current Month: {{ month }}</h3>
-    <month-selector @date="onDateChange($event)"></month-selector>
+    <h3>
+      Current Month:
+      <month-selector @date="onDateChange($event)"></month-selector>
+    </h3>
 
     <label for="type-of-worker">Type of worker:</label>
     <select
