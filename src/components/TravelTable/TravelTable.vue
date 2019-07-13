@@ -4,7 +4,11 @@
     <month-selector @date="onDateChange($event)"></month-selector>
 
     <label for="type-of-worker">Type of worker:</label>
-    <select id="type-of-worker" :value="workerType" @input="setWorkerType($event.target.value)">
+    <select
+      id="type-of-worker"
+      :value="workerType"
+      @input="setWorkerType($event.target.value)"
+    >
       <option value="directors">Directors</option>
       <option value="others">Others</option>
     </select>
@@ -64,6 +68,7 @@ import MonthSelector from "./MonthSelector.vue";
 import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
 import { mapGetters } from "vuex";
 import moment from "moment";
+import { round } from "@/math";
 
 @Component({ components: { TravelRow, MonthSelector } })
 export default class TravelTable extends Vue {
@@ -80,7 +85,7 @@ export default class TravelTable extends Vue {
   }
 
   get total() {
-    return this.$store.getters.total;
+    return round(this.$store.getters.total, 2);
   }
 
   get maxDailyCompensation(): number {

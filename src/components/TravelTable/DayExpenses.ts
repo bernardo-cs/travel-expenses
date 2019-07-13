@@ -6,6 +6,7 @@ import {
   CountryTravel,
   TypeOfWorker
 } from "./TraveTable.interfaces";
+import { round } from "../../math";
 
 const rangedMoment = extendMoment(Moment as any);
 export const maxDailyExpense: MaxDailyExpense = {
@@ -109,5 +110,5 @@ export function dailyExpenses(
     .map(rule => rule.apply(arrival, departure, accomodation))
     .reduce((res: number, p: number) => res + p, 0);
 
-  return maxDailyExpense[countryTravelType][workerType] * percentage;
+  return round(maxDailyExpense[countryTravelType][workerType] * percentage, 2);
 }
