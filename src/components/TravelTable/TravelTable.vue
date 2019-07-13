@@ -27,6 +27,7 @@
     <table>
       <thead>
         <tr>
+          <th>Actions</th>
           <th>Day</th>
           <th>Service</th>
           <th>Departure</th>
@@ -46,6 +47,7 @@
           :arrival="row.arrival"
           :sleepover="row.sleepOver"
           :outsideCountry="row.outsideCountry"
+          @clearRow="clearRow(index)"
           @departureChanged="setDeparture(index, $event)"
           @descriptionChanged="setService(index, $event)"
           @arrivalChanged="setArrival(index, $event)"
@@ -126,6 +128,10 @@ export default class TravelTable extends Vue {
 
   setWorkerType(workerType: TypeOfWorker) {
     this.$store.commit("setWorkerType", workerType);
+  }
+
+  clearRow(index: number) {
+    this.$store.commit("clearRow", index);
   }
 }
 </script>

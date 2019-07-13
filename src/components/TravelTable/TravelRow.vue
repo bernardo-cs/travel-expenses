@@ -1,5 +1,8 @@
 <template>
   <tr>
+    <td>
+      <button @click="$emit('clearRow')">X</button>
+    </td>
     <td>{{ day.getUTCDate() }} | {{ weekDay(day) }}</td>
     <td>
       <input

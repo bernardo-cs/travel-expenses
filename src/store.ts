@@ -36,6 +36,7 @@ interface StoreMutations {
     state: StoreState,
     { index, value }: { index: number; value: boolean }
   ) => void;
+  clearRow: (state: StoreState, index: number) => void;
   setService: (
     state: StoreState,
     payload: { index: number; service: string }
@@ -101,6 +102,15 @@ const store: {
     setService(state: StoreState, payload: { index: number; service: string }) {
       const rows = currentMonthRows(state);
       rows[payload.index].service = payload.service;
+    },
+    clearRow(state: StoreState, index: number) {
+      const rows = currentMonthRows(state);
+
+      rows[index].departure = undefined;
+      rows[index].arrival = undefined;
+      rows[index].service = "";
+      rows[index].sleepOver = false;
+      rows[index].outsideCountry = false;
     },
     setDeparture(
       state: StoreState,
