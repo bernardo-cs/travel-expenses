@@ -158,11 +158,11 @@ function initRows(date: Date): Array<IRow> {
           sleepOver: false,
           departure: day
             .startOf("day")
-            .set("hour", 8)
+            .set("hour", 9)
             .toDate(),
           arrival: day
             .startOf("day")
-            .set("hour", 22)
+            .set("hour", 18)
             .toDate()
         };
   });
