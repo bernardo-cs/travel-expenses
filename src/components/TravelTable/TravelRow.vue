@@ -48,6 +48,7 @@
       <input
         type="checkbox"
         :checked="outsideCountry"
+        @mousedown="mouseOverCheckBox($event, 'outsideCountryChanged')"
         @mouseover="mouseOverCheckBox($event, 'outsideCountryChanged')"
         @input="checkboxChanged('outsideCountryChanged', $event.target.checked)"
       />
