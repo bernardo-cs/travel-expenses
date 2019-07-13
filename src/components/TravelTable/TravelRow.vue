@@ -35,8 +35,9 @@
     <td>
       <input
         type="checkbox"
-        @mouseover="mouseOverCheckBox($event, 'sleepoverChanged')"
         :checked="sleepover"
+        @mouseover="mouseOverCheckBox($event, 'sleepoverChanged')"
+        @mousedown="mouseOverCheckBox($event, 'sleepoverChanged')"
         @input="checkboxChanged('sleepoverChanged', $event.target.checked)"
       />
     </td>
