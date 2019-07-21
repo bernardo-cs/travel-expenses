@@ -2,7 +2,7 @@
   <tr>
     <td>
       <button @click="$emit('clearRow')">X</button>
-      <button @click="$emit('autoFillRow')">AutoFill</button>
+      <button @click="$emit('autoFillRow')">{{ $t('autoFill') }}</button>
     </td>
     <td>{{ day.getUTCDate() }} | {{ weekDay(day) }}</td>
     <td>

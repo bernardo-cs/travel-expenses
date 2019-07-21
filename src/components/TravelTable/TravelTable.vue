@@ -1,42 +1,42 @@
 <template>
   <div>
     <h3>
-      Current Month:
+      {{ $t('travelTable.currentMonth')}} :
       <month-selector @date="onDateChange($event)"></month-selector>
-      <button @click="autoFill()">Autofill {{ month }}</button>
-      <button @click="clear()">Clear {{ month }}</button>
+      <button @click="autoFill()"> {{ $t('autoFill') }} {{ month }}</button>
+      <button @click="clear()">{{ $t('clear')}} {{ month }}</button>
     </h3>
 
-    <label for="type-of-worker">Type of worker:</label>
+    <label for="type-of-worker">{{ $t('typeOfWorker')}}</label>
     <select
       id="type-of-worker"
       :value="workerType"
       @input="setWorkerType($event.target.value)"
     >
-      <option value="directors">Directors</option>
-      <option value="others">Others</option>
+      <option value="directors">{{ $t('directors') }}</option>
+      <option value="others">{{ $t('others') }}</option>
     </select>
 
     <label>
-      Max daily compensation for travels inside country:
+      {{ $t('travelTable.maxCompensation') }}
       {{ maxDailyCompensation }}
     </label>
     <label>
-      Max daily compensation for travels outside the country:
+      {{ $t('travelTable.maxCompensationOutsideCountry') }}
       {{ maxDailyCompensationOutsideCountry }}
     </label>
 
     <table>
       <thead>
         <tr>
-          <th>Actions</th>
-          <th>Day</th>
-          <th>Service</th>
-          <th>Departure</th>
-          <th>Arrival</th>
-          <th>Sleep Over</th>
-          <th>Outside Country</th>
-          <th>Compensation</th>
+          <th>{{ $t('action') }}</th>
+          <th>{{ $t('day') }}</th>
+          <th>{{ $t('service') }}</th>
+          <th>{{ $t('departure') }}</th>
+          <th>{{ $t('arrival') }}</th>
+          <th>{{ $t('sleepOver') }}</th>
+          <th>{{ $t('outsideCountry') }}</th>
+          <th>{{ $t('compensation') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -61,9 +61,11 @@
     </table>
 
     <div>
-      <span>Total</span>
+      <span>{{ $t('total') }}</span>
       {{ total }}
     </div>
+
+    <local></local>
   </div>
 </template>
 
@@ -71,13 +73,14 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { maxDailyExpense } from "./DayExpenses";
 import TravelRow from "./TravelRow.vue";
+import Local from "./Local.vue";
 import MonthSelector from "./MonthSelector.vue";
 import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
 import { mapGetters } from "vuex";
 import moment from "moment";
 import { round } from "@/math";
 
-@Component({ components: { TravelRow, MonthSelector } })
+@Component({ components: { TravelRow, MonthSelector, Local } })
 export default class TravelTable extends Vue {
   get rows() {
     return this.$store.getters.rows;
