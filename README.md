@@ -35,5 +35,11 @@ yarn run test:e2e
 yarn run test:unit
 ```
 
+### TODO
+
+- excel download support: https://github.com/SheetJS/js-xlsx/tree/master/demos/vue
+- internationalization
+- styling
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
