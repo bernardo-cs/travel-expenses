@@ -3,8 +3,8 @@
     <h3>
       {{ $t("travelTable.currentMonth") }} :
       <month-selector @date="onDateChange($event)"></month-selector>
-      <button @click="autoFill()">{{ $t("autoFill") }} {{ month }}</button>
-      <button @click="clear()">{{ $t("clear") }} {{ month }}</button>
+      <button @click="autoFill()">{{ $t("autoFill") }} {{ $d(month, 'month') }}</button>
+      <button @click="clear()">{{ $t("clear") }} {{ $d(month, 'month') }}</button>
     </h3>
 
     <label for="type-of-worker">{{ $t("typeOfWorker") }}</label>
@@ -91,7 +91,7 @@ export default class TravelTable extends Vue {
   }
 
   get month() {
-    return moment(this.$store.state.date).format("MMMM");
+    return this.$store.state.date;
   }
 
   get total() {

@@ -4,7 +4,7 @@
       <button @click="$emit('clearRow')">X</button>
       <button @click="$emit('autoFillRow')">{{ $t("autoFill") }}</button>
     </td>
-    <td>{{ day.getUTCDate() }} | {{ weekDay(day) }}</td>
+    <td>{{ day.getUTCDate() }} | {{ $d(day, 'weekDay') }}</td>
     <td>
       <input
         type="text"
@@ -81,7 +81,7 @@ export default class TravelRow extends Vue {
   }
 
   weekDay(date: Date) {
-    return moment(date).format("ddd");
+    return date;
   }
 
   expense() {

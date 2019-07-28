@@ -63,9 +63,56 @@ export const messages = {
   }
 };
 
+const dateTimeFormats = {
+  en: {
+    weekDay: {
+      weekday: "short"
+    },
+    month: {
+      month: "long"
+    },
+    short: {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    },
+    long: {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      weekday: "short",
+      hour: "numeric",
+      minute: "numeric"
+    }
+  },
+  pt: {
+    weekDay: {
+      weekday: "short"
+    },
+    month: {
+      month: "long"
+    },
+    short: {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    },
+    long: {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      weekday: "short",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true
+    }
+  }
+};
+
 export const i18n = new VueI18n({
   locale: "en",
   fallbackLocale: "en",
+  dateTimeFormats,
   messages
 });
 

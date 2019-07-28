@@ -4,8 +4,8 @@
     :value="monthIndex"
     @input="setMonth($event.target.value)"
   >
-    <option v-for="month in months" :key="month.index" :value="month.index">{{
-      month.name
+    <option v-for="month in months" :key="month" :value="month">{{
+      $d(new Date(Date.UTC(0, month, 6, 6, 0, 0)), 'month')
     }}</option>
   </select>
 </template>
@@ -22,8 +22,8 @@ export default class MonthSelector extends Vue {
     return moment(this.date).month();
   }
 
-  get months() {
-    return moment.months().map((name, index) => ({ name, index }));
+  get months(): Array<number> {
+    return [0,1,2,3,4,5,6,7,8,9,10,11];
   }
 
   setMonth(month: number) {
