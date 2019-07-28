@@ -12,6 +12,7 @@ Vue.use(VueI18n);
 
 export const messages = {
   en: {
+    downloadAsExcel: "Download as Excel",
     action: "action",
     day: "day",
     service: "service",
@@ -37,6 +38,7 @@ export const messages = {
     }
   },
   pt: {
+    downloadAsExcel: "Download Excel",
     action: "acção",
     day: "dia",
     service: "serviço",
