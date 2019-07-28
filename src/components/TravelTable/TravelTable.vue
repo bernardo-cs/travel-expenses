@@ -1,42 +1,42 @@
 <template>
   <div>
     <h3>
-      {{ $t('travelTable.currentMonth')}} :
+      {{ $t("travelTable.currentMonth") }} :
       <month-selector @date="onDateChange($event)"></month-selector>
-      <button @click="autoFill()"> {{ $t('autoFill') }} {{ month }}</button>
-      <button @click="clear()">{{ $t('clear')}} {{ month }}</button>
+      <button @click="autoFill()">{{ $t("autoFill") }} {{ month }}</button>
+      <button @click="clear()">{{ $t("clear") }} {{ month }}</button>
     </h3>
 
-    <label for="type-of-worker">{{ $t('typeOfWorker')}}</label>
+    <label for="type-of-worker">{{ $t("typeOfWorker") }}</label>
     <select
       id="type-of-worker"
       :value="workerType"
       @input="setWorkerType($event.target.value)"
     >
-      <option value="directors">{{ $t('directors') }}</option>
-      <option value="others">{{ $t('others') }}</option>
+      <option value="directors">{{ $t("directors") }}</option>
+      <option value="others">{{ $t("others") }}</option>
     </select>
 
     <label>
-      {{ $t('travelTable.maxCompensation') }}
+      {{ $t("travelTable.maxCompensation") }}
       {{ maxDailyCompensation }}
     </label>
     <label>
-      {{ $t('travelTable.maxCompensationOutsideCountry') }}
+      {{ $t("travelTable.maxCompensationOutsideCountry") }}
       {{ maxDailyCompensationOutsideCountry }}
     </label>
 
     <table>
       <thead>
         <tr>
-          <th>{{ $t('action') }}</th>
-          <th>{{ $t('day') }}</th>
-          <th>{{ $t('service') }}</th>
-          <th>{{ $t('departure') }}</th>
-          <th>{{ $t('arrival') }}</th>
-          <th>{{ $t('sleepOver') }}</th>
-          <th>{{ $t('outsideCountry') }}</th>
-          <th>{{ $t('compensation') }}</th>
+          <th>{{ $t("action") }}</th>
+          <th>{{ $t("day") }}</th>
+          <th>{{ $t("service") }}</th>
+          <th>{{ $t("departure") }}</th>
+          <th>{{ $t("arrival") }}</th>
+          <th>{{ $t("sleepOver") }}</th>
+          <th>{{ $t("outsideCountry") }}</th>
+          <th>{{ $t("compensation") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -61,7 +61,7 @@
     </table>
 
     <div>
-      <span>{{ $t('total') }}</span>
+      <span>{{ $t("total") }}</span>
       {{ total }}
     </div>
 

@@ -1,15 +1,14 @@
 <template>
-  <select
-    id="local-selector"
-    @input="setLocal($event.target.value)"
-  >
-    <option v-for="local in locals" :key="local" :value="local">{{ $t(local) }}</option>
+  <select id="local-selector" @input="setLocal($event.target.value)">
+    <option v-for="local in locals" :key="local" :value="local">{{
+      $t(local)
+    }}</option>
   </select>
 </template>
 
 <script lang="ts">
-import { Component, Vue} from "vue-property-decorator";
-import { messages, i18n } from '../../main';
+import { Component, Vue } from "vue-property-decorator";
+import { messages, i18n } from "../../main";
 
 @Component
 export default class Locale extends Vue {
@@ -18,7 +17,7 @@ export default class Locale extends Vue {
   }
 
   setLocal(local: string) {
-    i18n.locale = local
+    i18n.locale = local;
   }
 }
 </script>
