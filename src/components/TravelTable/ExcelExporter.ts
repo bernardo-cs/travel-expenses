@@ -2,8 +2,12 @@ import { i18n } from "./../../main";
 import XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { dailyExpenses } from "./DayExpenses";
+import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
 
-export function downloadToExcel({ rows, total }, { workerType, date }) {
+export function downloadToExcel(
+  { rows, total }: { rows: Array<IRow>; total: number },
+  { workerType, date }: { workerType: TypeOfWorker; date: Date }
+) {
   const wb = XLSX.utils.book_new();
 
   const ws = XLSX.utils.aoa_to_sheet([
@@ -25,7 +29,7 @@ export function downloadToExcel({ rows, total }, { workerType, date }) {
   wb.Sheets[sheetName] = ws;
 
   wb.Props = {
-    Title: `${i18n.t("excel.title")} ${i18n.t(date, "monthWithYear")}`,
+    Title: `${i18n.t("excel.title")} ${i18n.d(date, "monthWithYear")}`,
     Subject: "",
     Author: "Bernardo Simões",
     CreatedDate: new Date()
@@ -48,14 +52,17 @@ function s2ab(s: any) {
   return buf;
 }
 
-function storeRowsToExcelRows(rows, workerType): Array<any> {
+function storeRowsToExcelRows(
+  rows: Array<IRow>,
+  workerType: TypeOfWorker
+): Array<any> {
   return rows.map(row => {
     const outsideCountry = row.outsideCountry ? "outside" : "inside";
 
     const dailyRemoneration = dailyExpenses(
       row.arrival,
       row.departure,
-      row.sleepover,
+      row.sleepOver,
       outsideCountry,
       workerType
     );
