@@ -3,6 +3,7 @@ import XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { dailyExpenses } from "./DayExpenses";
 import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
+import moment from "moment";
 
 export function downloadToExcel(
   { rows, total }: { rows: Array<IRow>; total: number },
@@ -70,8 +71,8 @@ function storeRowsToExcelRows(
     return [
       i18n.d(row.day, "weekWithDay"),
       row.service,
-      row.departure,
-      row.arrival,
+      row.departure ? moment(row.departure).format("hh:mm") : "",
+      row.arrival ? moment(row.arrival).format("HH:mm") : "",
       row.sleepOver,
       row.outsideCountry,
       dailyRemoneration

@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>Travel Expenses</h1>
+    <h1>{{ $t("travelExpenses") }}</h1>
 
     <travel-table></travel-table>
   </div>

@@ -201,6 +201,7 @@ function initRows(date: Date): Array<IRow> {
 
 function autoFillRow(index: number, date: Date): IRow {
   const day = moment(date).set("date", 1 + index);
+  const service = i18n.t("defaultServiceDescription") as string;
 
   return [0, 6].includes(day.day())
     ? {
@@ -213,7 +214,7 @@ function autoFillRow(index: number, date: Date): IRow {
       }
     : {
         day: day.toDate(),
-        service: "Deslocações",
+        service,
         outsideCountry: false,
         sleepOver: false,
         departure: day

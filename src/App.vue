@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/expenses">Expenses</router-link>|
-      <router-link to="/about">About</router-link>
+      <router-link to="/expenses">{{ $t("travelExpenses") }}</router-link
+      >|
+      <router-link to="/about">{{ $t("about.self") }}</router-link>
     </div>
     <router-view />
   </div>

@@ -12,6 +12,7 @@ Vue.use(VueI18n);
 
 export const messages = {
   en: {
+    travelExpenses: "Travel Expenses",
     downloadAsExcel: "Download as Excel",
     action: "action",
     day: "day",
@@ -39,9 +40,15 @@ export const messages = {
     excel: {
       title: "Travel Expenses for:",
       fileName: "travel_expenses"
+    },
+    about: {
+      self: "about",
+      description:
+        "Calculates company travel expenses acording to the Portuguese law "
     }
   },
   pt: {
+    travelExpenses: "Despesas de Deslocação",
     downloadAsExcel: "Download Excel",
     action: "acção",
     day: "dia",
@@ -67,8 +74,12 @@ export const messages = {
       currentMonth: "mes actual"
     },
     excel: {
-      title: "Desas de deslocação de ",
+      title: "Despesas de deslocação de ",
       fileName: "despesas_deslocacao"
+    },
+    about: {
+      self: "sobre",
+      description: "Tabela de calculo automático de despesas de deslocação"
     }
   }
 };
