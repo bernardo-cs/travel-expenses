@@ -6,6 +6,7 @@ import {
   TypeOfWorker
 } from "./components/TravelTable/TraveTable.interfaces";
 import { dailyExpenses } from "./components/TravelTable/DayExpenses";
+import { i18n } from "./main";
 
 Vue.use(Vuex);
 
@@ -142,8 +143,9 @@ const store: {
     },
     autoFillRow(state: StoreState, index: number) {
       const rows = currentMonthRows(state);
+      const ser = i18n.t("defaultServiceDescription") as string;
 
-      rows[index].service = "Deslocações";
+      rows[index].service = ser;
       rows[index].outsideCountry = false;
       rows[index].sleepOver = false;
       rows[index].departure = moment(rows[index].day)
