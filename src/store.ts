@@ -80,7 +80,7 @@ const store: {
     },
     total: (state, getters) => {
       return getters.rows.reduce((acc: number, row: IRow) => {
-        const countryTravel = row.outsideCountry ? "inside" : "outside";
+        const countryTravel = row.outsideCountry ? "outside" : "inside";
         const expense = dailyExpenses(
           row.arrival,
           row.departure,
