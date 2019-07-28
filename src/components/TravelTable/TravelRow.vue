@@ -4,7 +4,7 @@
       <button @click="$emit('clearRow')">X</button>
       <button @click="$emit('autoFillRow')">{{ $t("autoFill") }}</button>
     </td>
-    <td>{{ day.getUTCDate() }} | {{ $d(day, 'weekDay') }}</td>
+    <td>{{ day.getUTCDate() }} | {{ $d(day, "weekDay") }}</td>
     <td>
       <input
         type="text"

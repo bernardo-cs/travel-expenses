@@ -5,7 +5,7 @@
     @input="setMonth($event.target.value)"
   >
     <option v-for="month in months" :key="month" :value="month">{{
-      $d(new Date(Date.UTC(0, month, 6, 6, 0, 0)), 'month')
+      $d(new Date(Date.UTC(0, month, 6, 6, 0, 0)), "month")
     }}</option>
   </select>
 </template>
@@ -23,7 +23,7 @@ export default class MonthSelector extends Vue {
   }
 
   get months(): Array<number> {
-    return [0,1,2,3,4,5,6,7,8,9,10,11];
+    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   }
 
   setMonth(month: number) {
