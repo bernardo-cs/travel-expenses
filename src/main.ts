@@ -35,6 +35,10 @@ export const messages = {
       maxCompensationOutsideCountry:
         "Max daily compensation for travels inside country:",
       currentMonth: "Current month"
+    },
+    excel: {
+      title: "Travel Expenses for:",
+      fileName: "travel_expenses"
     }
   },
   pt: {
@@ -61,6 +65,10 @@ export const messages = {
       maxCompensationOutsideCountry:
         "Compensação diária máxima para viajens fora do País",
       currentMonth: "mes actual"
+    },
+    excel: {
+      title: "Desas de deslocação de ",
+      fileName: "despesas_deslocacao"
     }
   }
 };
@@ -70,13 +78,20 @@ const dateTimeFormats = {
     weekDay: {
       weekday: "short"
     },
+    weekWithDay: {
+      weekday: "long",
+      day: "numeric"
+    },
     month: {
       month: "long"
     },
+    monthWithYear: {
+      month: "long",
+      year: "numeric"
+    },
     short: {
       year: "numeric",
-      month: "short",
-      day: "numeric"
+      month: "long"
     },
     long: {
       year: "numeric",
@@ -91,13 +106,16 @@ const dateTimeFormats = {
     weekDay: {
       weekday: "short"
     },
+    weekWithDay: {
+      weekday: "long",
+      day: "numeric"
+    },
     month: {
       month: "long"
     },
     short: {
       year: "numeric",
-      month: "short",
-      day: "numeric"
+      month: "long"
     },
     long: {
       year: "numeric",

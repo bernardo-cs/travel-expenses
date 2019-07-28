@@ -85,8 +85,7 @@ import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
 import { mapGetters } from "vuex";
 import moment from "moment";
 import { round } from "@/math";
-import XLSX from "xlsx";
-import { saveAs } from "file-saver";
+import { downloadToExcel } from "./ExcelExporter";
 
 @Component({ components: { TravelRow, MonthSelector, Local } })
 export default class TravelTable extends Vue {
@@ -161,33 +160,7 @@ export default class TravelTable extends Vue {
   }
 
   downloadAsExcel() {
-    const wb = XLSX.utils.book_new();
-
-    const ws_data = [["hello", "world"]];
-    const ws = XLSX.utils.aoa_to_sheet(ws_data);
-
-    wb.SheetNames.push("Test Sheet");
-    wb.Sheets["Test Sheet"] = ws;
-
-    wb.Props = {
-      Title: "SheetJS Tutorial",
-      Subject: "Test",
-      Author: "Red Stapler",
-      CreatedDate: new Date(2017, 12, 19)
-    };
-    var wbout = XLSX.write(wb, { bookType: "xlsx", type: "binary" });
-
-    saveAs(
-      new Blob([s2ab(wbout)], { type: "application/octet-stream" }),
-      "test.xlsx"
-    );
+    downloadToExcel(this.$store.getters, this.$store.state);
   }
-}
-
-function s2ab(s: any) {
-  var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
-  var view = new Uint8Array(buf); //create uint8array as viewer
-  for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff; //convert to octet
-  return buf;
 }
 </script>
