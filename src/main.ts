@@ -5,6 +5,7 @@ import store from "./store";
 import VueI18n from "vue-i18n";
 import "./registerServiceWorker";
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
+import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 
@@ -155,5 +156,6 @@ new Vue({
   i18n,
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount("#app");

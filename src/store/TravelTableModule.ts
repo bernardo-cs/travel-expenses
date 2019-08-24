@@ -14,6 +14,7 @@ export class TravelTableModule extends VuexModule {
   _date: Date = moment()
     .set("date", 1)
     .toDate();
+
   _rowsByMonth: { [k: string]: Array<IRow> } = {
     [moment()
       .set("date", 1)
@@ -23,6 +24,7 @@ export class TravelTableModule extends VuexModule {
         .toDate()
     )
   };
+
   _workerType: TypeOfWorker = "directors";
 
   get date() {

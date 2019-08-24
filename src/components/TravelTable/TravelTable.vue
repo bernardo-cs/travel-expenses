@@ -1,47 +1,15 @@
 <template>
-  <div>
-    <h3>
-      {{ $t("travelTable.currentMonth") }} :
-      <month-selector @date="onDateChange($event)"></month-selector>
-      <button @click="autoFill()">
-        {{ $t("autoFill") }} {{ $d(month, "month") }}
-      </button>
-      <button @click="clear()">
-        {{ $t("clear") }} {{ $d(month, "month") }}
-      </button>
-    </h3>
-
-    <label for="type-of-worker">{{ $t("typeOfWorker") }}</label>
-    <select
-      id="type-of-worker"
-      :value="workerType"
-      @input="setWorkerType($event.target.value)"
-    >
-      <option value="directors">{{ $t("directors") }}</option>
-      <option value="others">{{ $t("others") }}</option>
-    </select>
-
-    <label>
-      {{ $t("travelTable.maxCompensation") }}
-      {{ maxDailyCompensation }}
-    </label>
-    <label>
-      {{ $t("travelTable.maxCompensationOutsideCountry") }}
-      {{ maxDailyCompensationOutsideCountry }}
-    </label>
+  <v-container>
+    <v-data-table :headers="headers" :items="items">
+      <v-toolbar flat color="white">
+        <v-toolbar-title>Travel Expenses for Month</v-toolbar-title>
+        <v-divider class="mx-4" inset vertical></v-divider>
+      </v-toolbar>
+    </v-data-table>
 
     <table>
       <thead>
-        <tr>
-          <th>{{ $t("action") }}</th>
-          <th>{{ $t("day") }}</th>
-          <th>{{ $t("service") }}</th>
-          <th>{{ $t("departure") }}</th>
-          <th>{{ $t("arrival") }}</th>
-          <th>{{ $t("sleepOver") }}</th>
-          <th>{{ $t("outsideCountry") }}</th>
-          <th>{{ $t("compensation") }}</th>
-        </tr>
+        <tr></tr>
       </thead>
       <tbody>
         <travel-row
@@ -68,18 +36,13 @@
       <span>{{ $t("total") }}</span>
       {{ total }}
     </div>
-
-    <button @click="downloadAsExcel()">{{ $t("downloadAsExcel") }}</button>
-
-    <local></local>
-  </div>
+  </v-container>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { maxDailyExpense } from "./DayExpenses";
+import { maxDailyExpense, dailyExpenses } from "./DayExpenses";
 import TravelRow from "./TravelRow.vue";
-import Local from "./Local.vue";
 import MonthSelector from "./MonthSelector.vue";
 import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
 import { mapGetters } from "vuex";
@@ -88,17 +51,60 @@ import { round } from "@/math";
 import { downloadToExcel } from "./ExcelExporter";
 import { getModule } from "vuex-module-decorators";
 import { TravelTableModule } from "@/store/TravelTableModule";
+import { i18n } from "../../main";
 
-@Component({ components: { TravelRow, MonthSelector, Local } })
+const HEADERS = [
+  "action",
+  "day",
+  "service",
+  "departure",
+  "arrival",
+  "sleepOver",
+  "outsideCountry",
+  "compensation"
+];
+@Component({ components: { TravelRow } })
 export default class TravelTable extends Vue {
   store: TravelTableModule = getModule(TravelTableModule, this.$store);
 
-  get rows() {
-    return this.store.rows;
+  get headers() {
+    return HEADERS.map(header => {
+      return {
+        text: i18n.t(header),
+        value: header,
+        align: "left",
+        sortable: false
+      };
+    });
   }
 
-  get workerType() {
-    return this.store.workerType;
+  get items() {
+    return this.store.rows.map(row => {
+      const outsideCountry = row.outsideCountry ? "outside" : "inside";
+      const compensation = dailyExpenses(
+        row.arrival,
+        row.departure,
+        row.sleepOver,
+        outsideCountry,
+        this.store.workerType
+      );
+      const day = `${row.day.getUTCDate()}  | ${i18n.d(row.day, "weekDay")}`;
+      const departure = row.departure
+        ? moment(row.departure).format("HH:mm a")
+        : "";
+      const arrival = row.arrival ? moment(row.arrival).format("HH:mm a") : "";
+
+      return {
+        day,
+        compensation,
+        departure,
+        arrival
+      };
+    });
+  }
+
+  get rows() {
+    return this.store.rows;
   }
 
   get month() {
@@ -117,10 +123,6 @@ export default class TravelTable extends Vue {
   get maxDailyCompensationOutsideCountry(): number {
     const workerType: TypeOfWorker = this.store.workerType;
     return maxDailyExpense.outside[workerType];
-  }
-
-  onDateChange(date: string) {
-    this.store.setDate(date);
   }
 
   setDeparture(index: number, date: Date) {
@@ -143,37 +145,12 @@ export default class TravelTable extends Vue {
     this.store.setOutsideCountry({ index, value });
   }
 
-  setWorkerType(workerType: TypeOfWorker) {
-    this.store.setWorkerType(workerType);
-  }
-
   clearRow(index: number) {
     this.store.clearRow(index);
   }
 
   autoFillRow(index: number) {
     this.store.autoFillRow(index);
-  }
-
-  autoFill() {
-    this.store.autoFillRows();
-  }
-
-  clear() {
-    this.store.clearRows();
-  }
-
-  downloadAsExcel() {
-    downloadToExcel(
-      {
-        rows: this.store.rows,
-        total: this.store.total
-      },
-      {
-        workerType: this.store.workerType,
-        date: this.store.date
-      }
-    );
   }
 }
 </script>

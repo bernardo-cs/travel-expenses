@@ -1,30 +1,34 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/expenses">{{ $t("travelExpenses") }}</router-link
-      >|
-      <router-link to="/about">{{ $t("about.self") }}</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <span>VanillAlternative</span>
+        <span class="font-weight-light">Travel Expenses</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+
+      <v-btn text to="/expenses">
+        <span class="mr-2">{{ $t("travelExpenses") }}</span>
+      </v-btn>
+
+      <v-btn text to="/about">
+        <span class="mr-2">{{ $t("about.self") }}</span>
+      </v-btn>
+
+      <local></local>
+    </v-app-bar>
+
+    <v-content>
+      <router-view />
+    </v-content>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+<script lang="ts">
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+import Local from "./Local.vue";
+
+@Component({ components: { Local } })
+export default class App extends Vue {}
+</script>
