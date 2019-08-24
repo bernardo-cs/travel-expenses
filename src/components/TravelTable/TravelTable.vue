@@ -86,81 +86,86 @@ import { mapGetters } from "vuex";
 import moment from "moment";
 import { round } from "@/math";
 import { downloadToExcel } from "./ExcelExporter";
+import { getModule } from "vuex-module-decorators";
+import { TravelTableModule } from "@/store/TravelTableModule";
 
 @Component({ components: { TravelRow, MonthSelector, Local } })
 export default class TravelTable extends Vue {
+  store: TravelTableModule = getModule(TravelTableModule, this.$store);
+
   get rows() {
-    return this.$store.getters.rows;
+    return this.store.rows;
   }
 
   get workerType() {
-    return this.$store.state.workerType;
+    return this.store.workerType;
   }
 
   get month() {
-    return this.$store.state.date;
+    return this.store.date;
   }
 
   get total() {
-    return round(this.$store.getters.total, 2);
+    return round(this.store.total, 2);
   }
 
   get maxDailyCompensation(): number {
-    const workerType: TypeOfWorker = this.$store.state.workerType;
+    const workerType: TypeOfWorker = this.store.workerType;
     return maxDailyExpense.inside[workerType];
   }
 
   get maxDailyCompensationOutsideCountry(): number {
-    const workerType: TypeOfWorker = this.$store.state.workerType;
+    const workerType: TypeOfWorker = this.store.workerType;
     return maxDailyExpense.outside[workerType];
   }
 
   onDateChange(date: string) {
-    this.$store.commit("setDate", date);
+    this.store.setDate(date);
   }
 
   setDeparture(index: number, date: Date) {
-    this.$store.commit("setDeparture", { index, date });
+    this.store.setDeparture({ index, date });
   }
 
   setService(index: number, service: string) {
-    this.$store.commit("setService", { index, service });
+    this.store.setService({ index, service });
   }
 
   setArrival(index: number, date: Date) {
-    this.$store.commit("setArrival", { index, date });
+    this.store.setArrival({ index, date });
   }
 
   setSleepOver(index: number, value: boolean) {
-    this.$store.commit("setSleepOver", { index, value });
+    this.store.setSleepOver({ index, value });
   }
 
   setOutsideCountry(index: number, value: boolean) {
-    this.$store.commit("setOutsideCountry", { index, value });
+    this.store.setOutsideCountry({ index, value });
   }
 
   setWorkerType(workerType: TypeOfWorker) {
-    this.$store.commit("setWorkerType", workerType);
+    this.store.setWorkerType(workerType);
   }
 
   clearRow(index: number) {
-    this.$store.commit("clearRow", index);
+    this.store.clearRow(index);
   }
 
   autoFillRow(index: number) {
-    this.$store.commit("autoFillRow", index);
+    this.store.autoFillRow(index);
   }
 
   autoFill() {
-    this.$store.commit("autoFillRows");
+    this.store.autoFillRows();
   }
 
   clear() {
-    this.$store.commit("clearRows");
+    this.store.clearRows();
   }
 
   downloadAsExcel() {
-    downloadToExcel(this.$store.getters, this.$store.state);
+    // TODO support download to excel
+    // downloadToExcel(this.store.getters, this.store.state);
   }
 }
 </script>

@@ -62,6 +62,8 @@ import { Moment } from "moment";
 import { dailyExpenses } from "./DayExpenses";
 import moment from "moment";
 import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
+import { getModule } from "vuex-module-decorators";
+import { TravelTableModule } from "@/store/TravelTableModule";
 
 @Component({ components: { VueCtkDateTimePicker } })
 export default class TravelRow extends Vue {
@@ -71,6 +73,8 @@ export default class TravelRow extends Vue {
   @Prop() public departure!: Date;
   @Prop() public sleepover!: boolean;
   @Prop() public outsideCountry!: boolean;
+
+  store: TravelTableModule = getModule(TravelTableModule, this.$store);
 
   hours(date: Date) {
     if (!date) {
@@ -92,7 +96,7 @@ export default class TravelRow extends Vue {
       this.departure,
       this.sleepover,
       outsideCountry,
-      this.$store.state.workerType
+      this.store.workerType
     );
   }
 
