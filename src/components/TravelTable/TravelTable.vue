@@ -164,8 +164,16 @@ export default class TravelTable extends Vue {
   }
 
   downloadAsExcel() {
-    // TODO support download to excel
-    // downloadToExcel(this.store.getters, this.store.state);
+    downloadToExcel(
+      {
+        rows: this.store.rows,
+        total: this.store.total
+      },
+      {
+        workerType: this.store.workerType,
+        date: this.store.date
+      }
+    );
   }
 }
 </script>
