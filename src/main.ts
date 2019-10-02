@@ -12,6 +12,8 @@ Vue.use(VueI18n);
 
 export const messages = {
   en: {
+    true: "Yes",
+    false: "No",
     travelExpenses: "Travel Expenses",
     downloadAsExcel: "Download as Excel",
     action: "action",
@@ -48,6 +50,8 @@ export const messages = {
     }
   },
   pt: {
+    true: "Sim",
+    false: "Não",
     travelExpenses: "Despesas de Deslocação",
     downloadAsExcel: "Download Excel",
     action: "acção",

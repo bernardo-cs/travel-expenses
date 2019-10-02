@@ -18,7 +18,7 @@ export function downloadToExcel(
       i18n.t("departure"),
       i18n.t("arrival"),
       i18n.t("sleepOver"),
-      i18n.t("outsidecountry"),
+      i18n.t("outsideCountry"),
       i18n.t("compensation")
     ],
     ...storeRowsToExcelRows(rows, workerType),
@@ -73,8 +73,8 @@ function storeRowsToExcelRows(
       row.service,
       row.departure ? moment(row.departure).format("hh:mm") : "",
       row.arrival ? moment(row.arrival).format("HH:mm") : "",
-      row.sleepOver,
-      row.outsideCountry,
+      i18n.t(row.sleepOver.toString()),
+      i18n.t(row.outsideCountry.toString()),
       dailyRemoneration
     ];
   });
