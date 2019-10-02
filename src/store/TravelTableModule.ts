@@ -11,10 +11,10 @@ const ROWS_FORMAT = "MM-YYYY";
 
 @Module({ name: "TravelTableModule" })
 export class TravelTableModule extends VuexModule {
-  private _date: Date = moment()
+  _date: Date = moment()
     .set("date", 1)
     .toDate();
-  private _rowsByMonth: { [k: string]: Array<IRow> } = {
+  _rowsByMonth: { [k: string]: Array<IRow> } = {
     [moment()
       .set("date", 1)
       .format(ROWS_FORMAT)]: initRows(
@@ -23,7 +23,7 @@ export class TravelTableModule extends VuexModule {
         .toDate()
     )
   };
-  private _workerType: TypeOfWorker = "directors";
+  _workerType: TypeOfWorker = "directors";
 
   get date() {
     return this._date;
@@ -72,18 +72,18 @@ export class TravelTableModule extends VuexModule {
       .set("d", 1)
       .toDate();
 
-    this.currentMonthRows();
+    currentMonthRows(this);
   }
 
   @Mutation
   setService(payload: { index: number; service: string }) {
-    const rows = this.currentMonthRows();
+    const rows = currentMonthRows(this);
     rows[payload.index].service = payload.service;
   }
 
   @Mutation
   clearRows() {
-    const rows = this.currentMonthRows();
+    const rows = currentMonthRows(this);
 
     rows.forEach(row => {
       row.departure = undefined;
@@ -96,7 +96,7 @@ export class TravelTableModule extends VuexModule {
 
   @Mutation
   clearRow(index: number) {
-    const rows = this.currentMonthRows();
+    const rows = currentMonthRows(this);
 
     rows[index].departure = undefined;
     rows[index].arrival = undefined;
@@ -107,19 +107,19 @@ export class TravelTableModule extends VuexModule {
 
   @Mutation
   setDeparture({ index, date }: { index: number; date: Date }) {
-    const rows = this.currentMonthRows();
+    const rows = currentMonthRows(this);
     rows[index].departure = date;
   }
 
   @Mutation
   setArrival({ index, date }: { index: number; date: Date }) {
-    const rows = this.currentMonthRows();
+    const rows = currentMonthRows(this);
     rows[index].arrival = date;
   }
 
   @Mutation
   autoFillRow(index: number) {
-    const rows = this.currentMonthRows();
+    const rows = currentMonthRows(this);
     const ser = i18n.t("defaultServiceDescription") as string;
 
     rows[index].service = ser;
@@ -144,13 +144,13 @@ export class TravelTableModule extends VuexModule {
 
   @Mutation
   setSleepOver({ index, value }: { index: number; value: boolean }) {
-    const rows = this.currentMonthRows();
+    const rows = currentMonthRows(this);
     rows[index].sleepOver = value;
   }
 
   @Mutation
   setOutsideCountry({ index, value }: { index: number; value: boolean }) {
-    const rows = this.currentMonthRows();
+    const rows = currentMonthRows(this);
     rows[index].outsideCountry = value;
   }
 
@@ -158,16 +158,16 @@ export class TravelTableModule extends VuexModule {
   setWorkerType(workerType: TypeOfWorker) {
     this._workerType = workerType;
   }
+}
 
-  private currentMonthRows(): Array<IRow> {
-    if (this._rowsByMonth[moment(this._date).format(ROWS_FORMAT)]) {
-      return this._rowsByMonth[moment(this._date).format(ROWS_FORMAT)];
-    } else {
-      const r = initRows(this._date);
-      this._rowsByMonth[moment(this._date).format(ROWS_FORMAT)] = r;
+function currentMonthRows(state: TravelTableModule): Array<IRow> {
+  if (state._rowsByMonth[moment(state._date).format(ROWS_FORMAT)]) {
+    return state._rowsByMonth[moment(state._date).format(ROWS_FORMAT)];
+  } else {
+    const r = initRows(state._date);
+    state._rowsByMonth[moment(state._date).format(ROWS_FORMAT)] = r;
 
-      return r;
-    }
+    return r;
   }
 }
 
