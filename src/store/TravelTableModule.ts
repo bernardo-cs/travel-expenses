@@ -3,7 +3,7 @@ import {
   IRow,
   TypeOfWorker
 } from "@/components/TravelTable/TraveTable.interfaces";
-import moment from "moment";
+import moment, { isMoment, Moment } from "moment";
 import { dailyExpenses } from "@/components/TravelTable/DayExpenses";
 import { i18n } from "@/main";
 
@@ -65,11 +65,11 @@ export class TravelTableModule extends VuexModule {
   }
 
   @Mutation
-  setDate(date: string | Date) {
-    const d = date instanceof Date ? date : new Date(date);
+  setDate(date: string | Moment) {
+    const d = isMoment(date) ? date : new Date(date);
 
     this._date = moment(d)
-      .set("d", 1)
+      .set("date", 1)
       .toDate();
 
     currentMonthRows(this);
