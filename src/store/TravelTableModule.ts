@@ -73,12 +73,18 @@ export class TravelTableModule extends VuexModule {
       .toDate();
 
     currentMonthRows(this);
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
   setService(payload: { index: number; service: string }) {
     const rows = currentMonthRows(this);
     rows[payload.index].service = payload.service;
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
@@ -92,6 +98,9 @@ export class TravelTableModule extends VuexModule {
       row.sleepOver = false;
       row.outsideCountry = false;
     });
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
@@ -103,18 +112,27 @@ export class TravelTableModule extends VuexModule {
     rows[index].service = "";
     rows[index].sleepOver = false;
     rows[index].outsideCountry = false;
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
   setDeparture({ index, date }: { index: number; date: Date }) {
     const rows = currentMonthRows(this);
     rows[index].departure = date;
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
   setArrival({ index, date }: { index: number; date: Date }) {
     const rows = currentMonthRows(this);
     rows[index].arrival = date;
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
@@ -133,6 +151,9 @@ export class TravelTableModule extends VuexModule {
       .startOf("day")
       .set("hour", 18)
       .toDate();
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
@@ -140,23 +161,35 @@ export class TravelTableModule extends VuexModule {
     this._rowsByMonth[moment(this._date).format(ROWS_FORMAT)] = autoFillRows(
       this._date
     );
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
   setSleepOver({ index, value }: { index: number; value: boolean }) {
     const rows = currentMonthRows(this);
     rows[index].sleepOver = value;
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
   setOutsideCountry({ index, value }: { index: number; value: boolean }) {
     const rows = currentMonthRows(this);
     rows[index].outsideCountry = value;
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 
   @Mutation
   setWorkerType(workerType: TypeOfWorker) {
     this._workerType = workerType;
+
+    // Trigger table re-render
+    this._rowsByMonth = {...this._rowsByMonth};
   }
 }
 
@@ -166,7 +199,6 @@ function currentMonthRows(state: TravelTableModule): Array<IRow> {
   } else {
     const r = initRows(state._date);
     state._rowsByMonth[moment(state._date).format(ROWS_FORMAT)] = r;
-
     return r;
   }
 }
