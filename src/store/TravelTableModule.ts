@@ -75,7 +75,7 @@ export class TravelTableModule extends VuexModule {
     currentMonthRows(this);
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -84,7 +84,7 @@ export class TravelTableModule extends VuexModule {
     rows[payload.index].service = payload.service;
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -100,7 +100,7 @@ export class TravelTableModule extends VuexModule {
     });
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -114,7 +114,7 @@ export class TravelTableModule extends VuexModule {
     rows[index].outsideCountry = false;
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -123,7 +123,7 @@ export class TravelTableModule extends VuexModule {
     rows[index].departure = date;
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -132,7 +132,7 @@ export class TravelTableModule extends VuexModule {
     rows[index].arrival = date;
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -153,7 +153,7 @@ export class TravelTableModule extends VuexModule {
       .toDate();
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -163,7 +163,7 @@ export class TravelTableModule extends VuexModule {
     );
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -172,7 +172,7 @@ export class TravelTableModule extends VuexModule {
     rows[index].sleepOver = value;
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -181,7 +181,7 @@ export class TravelTableModule extends VuexModule {
     rows[index].outsideCountry = value;
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 
   @Mutation
@@ -189,7 +189,7 @@ export class TravelTableModule extends VuexModule {
     this._workerType = workerType;
 
     // Trigger table re-render
-    this._rowsByMonth = {...this._rowsByMonth};
+    this._rowsByMonth = { ...this._rowsByMonth };
   }
 }
 
