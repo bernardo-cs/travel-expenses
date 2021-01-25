@@ -2,7 +2,9 @@
   <div>
     <h3>
       {{ $t("travelTable.currentMonth") }} :
-      <month-selector @date="onDateChange($event)"></month-selector>
+
+      <month-selector :date="date" @date="onDateChange($event)"></month-selector>
+
       <button @click="autoFill()">{{ $t("autoFill") }} {{ month }}</button>
       <button @click="clear()">{{ $t("clear") }} {{ month }}</button>
     </h3>
@@ -72,18 +74,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { maxDailyExpense } from "./DayExpenses";
 import TravelRow from "./TravelRow.vue";
 import Local from "./Local.vue";
 import MonthSelector from "./MonthSelector.vue";
-import { IRow, TypeOfWorker } from "./TraveTable.interfaces";
-import { mapGetters } from "vuex";
-import moment from "moment";
+import { TypeOfWorker } from "./TraveTable.interfaces";
 import { round } from "@/math";
 import { downloadToExcel } from "./ExcelExporter";
 import { getModule } from "vuex-module-decorators";
 import { TravelTableModule } from "@/store/TravelTableModule";
+import { Moment } from "moment";
 
 @Component({ components: { TravelRow, MonthSelector, Local } })
 export default class TravelTable extends Vue {
@@ -101,6 +102,10 @@ export default class TravelTable extends Vue {
     return this.$d(this.store.date, "month");
   }
 
+  get date() {
+    return this.store.date;
+  }
+
   get total() {
     return round(this.store.total, 2);
   }
@@ -115,7 +120,7 @@ export default class TravelTable extends Vue {
     return maxDailyExpense.outside[workerType];
   }
 
-  onDateChange(date: string) {
+  onDateChange(date: Moment) {
     this.store.setDate(date);
   }
 

@@ -65,10 +65,8 @@ export class TravelTableModule extends VuexModule {
   }
 
   @Mutation
-  setDate(date: string | Moment) {
-    const d = isMoment(date) ? date : new Date(date);
-
-    this._date = moment(d)
+  setDate(date: Moment) {
+    this._date = date
       .set("date", 1)
       .toDate();
 
