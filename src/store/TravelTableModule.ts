@@ -66,9 +66,7 @@ export class TravelTableModule extends VuexModule {
 
   @Mutation
   setDate(date: Moment) {
-    this._date = date
-      .set("date", 1)
-      .toDate();
+    this._date = date.set("date", 1).toDate();
 
     currentMonthRows(this);
 

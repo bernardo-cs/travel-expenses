@@ -3,7 +3,10 @@
     <h3>
       {{ $t("travelTable.currentMonth") }} :
 
-      <month-selector :date="date" @date="onDateChange($event)"></month-selector>
+      <month-selector
+        :date="date"
+        @date="onDateChange($event)"
+      ></month-selector>
 
       <button @click="autoFill()">{{ $t("autoFill") }} {{ month }}</button>
       <button @click="clear()">{{ $t("clear") }} {{ month }}</button>
