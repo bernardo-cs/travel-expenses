@@ -92,7 +92,7 @@ export function IRS({
   return {
     tier: index === -1 ? irs.length : index,
     tax,
-    finalTax: round((100 * tax) / grossIncome, 2),
+    finalTax: round((100 * tax) / grossIncome, 2) || 0,
     totalTiers: irs.length
   };
 }
