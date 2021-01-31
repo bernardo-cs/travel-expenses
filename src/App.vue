@@ -3,6 +3,10 @@
     <div id="nav">
       <router-link to="/expenses">{{ $t("travelExpenses") }}</router-link
       >|
+      <router-link to="/source-retention">{{
+        $t("sourceRetention.self")
+      }}</router-link
+      >|
       <router-link to="/about">{{ $t("about.self") }}</router-link>
     </div>
     <router-view />

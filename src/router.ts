@@ -24,6 +24,11 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
+    },
+    {
+      path: "/source-retention",
+      name: "source-retention",
+      component: () => import("./views/SourceRetention.vue")
     }
   ]
 });

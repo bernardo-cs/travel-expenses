@@ -37,7 +37,8 @@ export const messages = {
       maxCompensation: "Max daily compensation for travels inside country:",
       maxCompensationOutsideCountry:
         "Max daily compensation for travels inside country:",
-      currentMonth: "Current month"
+      currentMonth: "Current month",
+      years: "years"
     },
     excel: {
       title: "Travel Expenses for:",
@@ -47,6 +48,22 @@ export const messages = {
       self: "about",
       description:
         "Calculates company travel expenses acording to the Portuguese law "
+    },
+    sourceRetention: {
+      self: "Source Retention",
+      grossIncome: "Gross Income",
+      socialSecurity: "Social Security",
+      IRS: "IRS",
+      numberOfDependent: "Dependent Number",
+      workerType: "Worker Type",
+      workerStatus: "Worker Status",
+      DEPENDENT: "Dependent",
+      NOT_MARRIED: "Not Married",
+      MARRIED_SINGLE_WORKER: "Married and Single Worker",
+      MARRIED_TWO_WORKERS: "Married both Work",
+      NOT_MARRIED_IMPAIRED: "Not Married/Impaired",
+      MARRIED_SINGLE_WORKER_IMPAIRED: "Married, Single Worker, Impaired",
+      MARRIED_TWO_WORKERS_IMPAIRED: "Married, Both Work, Impaired"
     }
   },
   pt: {
