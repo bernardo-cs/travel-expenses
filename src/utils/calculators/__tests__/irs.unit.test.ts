@@ -10,7 +10,13 @@ describe("IRS", () => {
         workerStatus: WORKER_STATUS.NOT_MARRIED
       });
 
-      expect(irs).toEqual({ finalTax: 0, tax: 0, tier: 0, totalTiers: 35 });
+      expect(irs).toEqual({
+        netIncome: 345,
+        tax: 0,
+        taxedIncome: 0,
+        tier: 0,
+        totalTiers: 35
+      });
     });
 
     it("calculates IRS for 5000", () => {
@@ -22,8 +28,9 @@ describe("IRS", () => {
       });
 
       expect(irs).toEqual({
-        finalTax: 20.22,
-        tax: 1010.78,
+        netIncome: 3370,
+        tax: 32.6,
+        taxedIncome: 1630,
         tier: 24,
         totalTiers: 35
       });
@@ -38,8 +45,9 @@ describe("IRS", () => {
       });
 
       expect(irs).toEqual({
-        finalTax: 43.81,
-        tax: 219025.23,
+        netIncome: 279000,
+        tax: 44.2,
+        taxedIncome: 221000,
         tier: 35,
         totalTiers: 35
       });

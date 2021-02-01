@@ -82,21 +82,36 @@ export function IRS({
     [_, ...scale] = irs[index];
   }
 
-  const taxScales = index === -1 ? irs : irs.slice(0, index + 1);
-
-  const tax = calculateTax(
-    grossIncome,
-    taxScales.map(([value, ...scales]) => [value, scales[numberOfDependent]])
-  );
+  const [__, ...taxScale] = index === -1 ? [...irs].reverse()[0] : irs[index];
+  const tax = taxScale[numberOfDependent];
+  const taxedIncome = round(grossIncome * (tax / 100), 2);
 
   return {
     tier: index === -1 ? irs.length : index,
+    taxedIncome,
+    netIncome: grossIncome - taxedIncome,
     tax,
-    finalTax: round((100 * tax) / grossIncome, 2) || 0,
     totalTiers: irs.length
   };
 }
 
+/**
+ * Calculates accumulated tax. Used for independent workers.
+ * @param grossIncome: customer gross income
+ * @param scales: IRS scales applied to customer gross income. Ex.:
+ *
+ * When gross income > 739 and < than 814 should return something similar to:
+ *
+ * [
+ * [686.0, 0.0],
+ * [718.0, 4.0],
+ * [739.0, 7.2],
+ * [814.0, 8.0],
+ * ]
+ *
+ * Where the first value represents max income for a given scale and the second
+ * value represents the actual tax
+ */
 function calculateTax(
   grossIncome: number,
   scales: Array<Array<number>>

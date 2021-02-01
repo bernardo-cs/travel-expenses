@@ -26,7 +26,8 @@
           v-for="numberOfDependent in [0, 1, 2, 3, 4, 5]"
           :key="numberOfDependent"
           :value="numberOfDependent"
-          >{{ numberOfDependent }}</option
+          >{{ numberOfDependent === 5 ? "+" : "" }}
+          {{ numberOfDependent }}</option
         >
       </select>
     </label>
@@ -59,9 +60,9 @@
 
     <ul>
       <li>{{ $t("sourceRetention.IRS") }}: {{ IRS }} €</li>
-      <li>{{ $t("total") }}: {{ grossIncome - IRS }} €</li>
+      <li>Net Income: {{ netIncome }} €</li>
       <li>Tier: {{ tier }}/{{ totalTiers }}</li>
-      <li>Final Tax: {{ finalTax }} %</li>
+      <li>Tax: {{ tax }} %</li>
     </ul>
   </div>
 </template>
@@ -84,7 +85,8 @@ export default class SourceRetention extends Vue {
 
   tier?: number;
   totalTiers?: number;
-  finalTax?: number;
+  tax?: number;
+  netIncome?: number;
 
   get years() {
     return Object.keys(IRS_TABLE);
@@ -99,7 +101,7 @@ export default class SourceRetention extends Vue {
   }
 
   get IRS() {
-    const { tier, tax, totalTiers, finalTax } = IRS({
+    const { tier, tax, totalTiers, taxedIncome, netIncome } = IRS({
       grossIncome: this.grossIncome,
       numberOfDependent: this.numberOfDependent,
       year: this.year,
@@ -108,9 +110,10 @@ export default class SourceRetention extends Vue {
 
     this.tier = tier;
     this.totalTiers = totalTiers;
-    this.finalTax = finalTax;
+    this.tax = tax;
+    this.netIncome = netIncome;
 
-    return tax;
+    return taxedIncome;
   }
 }
 </script>
