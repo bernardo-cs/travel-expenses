@@ -13,9 +13,10 @@ export enum WORKER_STATUS {
   MARRIED_TWO_WORKERS_IMPAIRED = "MARRIED_TWO_WORKERS_IMPAIRED"
 }
 
-export const IRS_TABLE: {
+export type IRSTable = {
   [key: number]: { [key: string]: Array<Array<number>> };
-} = {
+};
+export const IRS_TABLE: IRSTable = {
   [2021]: {
     [WORKER_STATUS.NOT_MARRIED]: [
       [686.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -52,7 +53,7 @@ export const IRS_TABLE: {
       [20221.0, 41.5, 41.1, 40.7, 39.8, 39.4, 37.6],
       [22749.0, 42.2, 42.0, 41.7, 40.8, 40.4, 38.8],
       [25276.0, 43.2, 43.0, 42.6, 41.7, 41.4, 40.0],
-      [25276.0, 44.2, 44.0, 43.6, 42.7, 42.3, 41.0]
+      [Number.POSITIVE_INFINITY, 44.2, 44.0, 43.6, 42.7, 42.3, 41.0]
     ]
   }
 };
@@ -87,7 +88,7 @@ export function IRS({
   const taxedIncome = round(grossIncome * (tax / 100), 2);
 
   return {
-    tier: index === -1 ? irs.length : index,
+    tier: index === -1 ? irs.length : index + 1,
     taxedIncome,
     netIncome: grossIncome - taxedIncome,
     tax,

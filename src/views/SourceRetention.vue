@@ -64,6 +64,8 @@
       <li>Tier: {{ tier }}/{{ totalTiers }}</li>
       <li>Tax: {{ tax }} %</li>
     </ul>
+
+    <IRSTable :table="IRSTable" :title="'Table'" :selectedRow="tier - 1" />
   </div>
 </template>
 
@@ -75,8 +77,9 @@ import {
   WORKER_STATUS,
   WORKER_TYPE
 } from "@/utils/calculators/irs";
+import IRSTable from "@/components/IRSTable/IRSTable.vue";
 
-@Component({})
+@Component({ components: { IRSTable } })
 export default class SourceRetention extends Vue {
   year: number = +Object.keys(IRS_TABLE)[0];
   numberOfDependent: number = 0;
@@ -114,6 +117,13 @@ export default class SourceRetention extends Vue {
     this.netIncome = netIncome;
 
     return taxedIncome;
+  }
+
+  get IRSTable(): Array<[number, number]> {
+    return IRS_TABLE[this.year][this.workerStatus].map(([income, ...taxes]) => [
+      income,
+      taxes[this.numberOfDependent]
+    ]);
   }
 }
 </script>

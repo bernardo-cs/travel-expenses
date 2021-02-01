@@ -14,7 +14,7 @@ describe("IRS", () => {
         netIncome: 345,
         tax: 0,
         taxedIncome: 0,
-        tier: 0,
+        tier: 1,
         totalTiers: 35
       });
     });
@@ -31,7 +31,7 @@ describe("IRS", () => {
         netIncome: 3370,
         tax: 32.6,
         taxedIncome: 1630,
-        tier: 24,
+        tier: 25,
         totalTiers: 35
       });
     });
