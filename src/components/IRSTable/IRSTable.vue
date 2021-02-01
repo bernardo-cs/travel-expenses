@@ -8,7 +8,7 @@
 
     <thead>
       <tr>
-        <th></th>
+        <th>#</th>
         <th>Income</th>
         <th>Tax</th>
       </tr>
@@ -16,9 +16,9 @@
 
     <tbody>
       <tr v-for="([income, tax], index) in table" :key="income">
-        <td>{{ selectedRow === index ? "👉" : "" }}</td>
-        <td>{{ income }}</td>
-        <td>{{ tax }}</td>
+        <td>{{ selectedRow === index ? "👉" : index + 1 }}</td>
+        <td>{{ formatIncome(income) }}</td>
+        <td>{{ tax }}%</td>
       </tr>
     </tbody>
   </table>
@@ -32,5 +32,9 @@ export default class IRSTable extends Vue {
   @Prop() public table?: Array<[number, number]>;
   @Prop() public title?: number;
   @Prop() public selectedRow?: number;
+
+  formatIncome(income: number): string {
+    return isFinite(income) ? income + "€" : "∞";
+  }
 }
 </script>
